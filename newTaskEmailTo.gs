@@ -1,24 +1,5 @@
-var ss = SpreadsheetApp.getActiveSpreadsheet()
-var SectionsSheet = ss.getSheetByName('Sections')
+function newTaskEmailTo(sheetName, emailAddress) {
 
-
-//Task Object
-var taskObj =
-{
-  title: "",
-  description: "",
-  reference: "",
-  url: "",
-  conatctPerson: "",
-  deadLine: "",
-  daysLeft: ""
-}
-
-
-
-function newTaskEmailTo(emailAddress, sheetName) {
-var sheetName = 'Sections'
-var emailAddress = "wpa+test@esngreece.gr"
   var SUBJECT = "New Task reported in Dashboard for " + sheetName
 
   var Sheet = ss.getSheetByName(sheetName)

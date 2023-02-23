@@ -37,12 +37,12 @@ function sectionsTasks() {
         <p><b>Deadline: </b> ${taskDeadline} </p>
         <p><b>Days Left: </b> ${taskDaysLeft} </p>`
 
-      MailApp.sendEmail({
+      /*MailApp.sendEmail({
         to: EMAIL_TO,
         cc: "",
         subject: Subject,
         htmlBody: message,
-      })
+      })*/
       Logger.log(message)
 
       SectionsSheet.getRange(7, setColumn).setValue("Email Sent")

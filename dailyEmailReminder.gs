@@ -58,7 +58,7 @@ for (var col = 0; col < ColumnRange; col++) {
           taskObj.title = TasksValues[0][col]
           taskObj.description = TasksValues[1][col]
           taskObj.reference = TaskUrlValue[0][col].getText()
-          //taskObj.reference.url = TaskUrlValue[0][col].getLinkUrl()
+          taskObj.url = TaskUrlValue[0][col].getLinkUrl()
           taskObj.conatctPerson = TasksValues[3][col]
           taskObj.deadLine = Utilities.formatDate(TasksValues[4][col], "Europe/Athens", "dd/MM/yyyy")
           taskObj.daysLeft = TasksValues[6][col]
@@ -67,7 +67,7 @@ for (var col = 0; col < ColumnRange; col++) {
           var message = `
           <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
           <p>${taskObj.description}</p>
-          <p><b>🔗 Reference: </b><a href="${TaskUrlValue[0][col].getLinkUrl()}">${taskObj.reference}</a></p>
+          <p><b>🔗 Reference: </b><a href="${taskObj.url}">${taskObj.reference}</a></p>
           <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
           <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
           <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>

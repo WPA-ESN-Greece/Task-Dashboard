@@ -49,6 +49,31 @@ function onEdit(){
 }
 
 
+function dailyDeadlineCheck(){
 
+  //Sections
+  dailyEmailReminder("Sections")
 
+  //👩‍💼 Presidents
+  dailyEmailReminder("👩‍💼 Presidents")
+
+  //🙌 VPs
+  dailyEmailReminder("🙌 VPs")
+
+  //💸Treasurers
+  dailyEmailReminder("💸Treasurers")
+
+  //🎨CMs
+  dailyEmailReminder("🎨CMs")
+
+  //💻WPAs
+  dailyEmailReminder("💻WPAs")
+
+  //🌟PMs
+  dailyEmailReminder("🌟PMs")
+
+  //🤝 ParMans
+  dailyEmailReminder("🤝 ParMans")
+
+}
 

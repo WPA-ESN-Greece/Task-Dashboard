@@ -19,7 +19,7 @@ function newTaskEmailTo(sheetName, emailAddress) {
   var TaskUrlValue = Sheet.getRange(4, StartColumn, 1, ColumnRange).getRichTextValues()
 
   for (var i = 0; i < ColumnRange + 1; i++) {
-    if (TasksValues[5][i] == "Ready to Email") {
+    if (TasksValues[5][i] == "Ready to Email" && TasksValues[0][i] != "") {
 
       taskObj.title = TasksValues[0][i]
       taskObj.description = TasksValues[1][i]

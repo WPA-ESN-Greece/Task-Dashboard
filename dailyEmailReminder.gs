@@ -1,6 +1,5 @@
 function dailyEmailReminder(sheetName){
 
-//var sheetName = "Sections"
 var Sheet = ss.getSheetByName(sheetName)
 
 var StartRow = 2

@@ -78,7 +78,7 @@ for (var col = 0; col < ColumnRange; col++) {
           MailApp.sendEmail
           ({
 
-            to: "wpa+sections@esngreece.gr", //RECIPIENT,
+            to: RECIPIENT,
             cc: "",
             subject: SUBJECT,
             htmlBody: message,

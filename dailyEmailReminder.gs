@@ -48,7 +48,7 @@ for (var col = 0; col < ColumnRange; col++) {
       else
       {
         Logger.log("Days Left: " + TasksValues[6][col])
-        if (TasksValues[6][col] >= 0 && TasksValues[6][col] < 4) 
+        if (TasksValues[6][col] >= 0 && TasksValues[6][col] < 4 || TasksValues[6][col] == "Passed") 
         {
           Logger.log(i + " i : " + StatusValues[i][col])
           Logger.log("Send Reminder to: " + emailAddresses[i])
@@ -70,6 +70,7 @@ for (var col = 0; col < ColumnRange; col++) {
           <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
           <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
           <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
+          <p>Oh! you have completed this task? Mark it as 'Done ✅' in the <a href="https://docs.google.com/spreadsheets/d/1nFLMVpC7scBY-my7AsxxJSu07JDYrX78QdNqSpvhgNE/edit?usp=sharing">Dashboard</a> so we know 🙏</p>
           `//message end
 
           var SUBJECT = "🎗Reminder for Task in Dashboard for " + sheetName
@@ -82,8 +83,21 @@ for (var col = 0; col < ColumnRange; col++) {
             cc: "",
             subject: SUBJECT,
             htmlBody: message,
+            name: "Dashboard Reminder"
 
           })
+
+          //Test
+          /*
+          MailApp.sendEmail
+          ({
+
+            to: "wpa+dashboardtest@esngreece.gr",
+            cc: "",
+            subject: SUBJECT,
+            htmlBody: message,
+
+          })*/
         }
       }
     }

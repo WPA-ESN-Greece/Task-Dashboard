@@ -37,6 +37,8 @@ function newTaskEmailTo(sheetName, emailAddress) {
       <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
       <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
       <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
+      <hr>
+      <p>Oh! you have completed this task? Mark it as 'Done ✅' in the <a href="https://docs.google.com/spreadsheets/d/1nFLMVpC7scBY-my7AsxxJSu07JDYrX78QdNqSpvhgNE/edit?usp=sharing">Dashboard</a> to let us know 🙏</p>
       `//message end
 
       Logger.log("Sending email")
@@ -47,7 +49,8 @@ function newTaskEmailTo(sheetName, emailAddress) {
           cc: "",
           subject: SUBJECT,
           htmlBody: message,
-
+          name: "Dashboard New Task"
+          
         })
 
         //Updates Notification Status Value

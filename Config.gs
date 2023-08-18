@@ -21,11 +21,11 @@ var activeSheet = ss.getActiveSheet()
   const Task_Start_Row = 2 //Row 2
   const Task_Start_Column = 5 //Column E // κανονικά είναι 4 (D) για δοκιμή το κάνω 5.
   const Task_Last_Row = 8 //Row 8
-  const Task_Row_Range = TaskLastRow - TaskStartRow + 1
+  const Task_Row_Range = Task_Last_Row - Task_Start_Row + 1
 
 //Task Status Range 
   const Task_Status_Start_Row = 10 //Row 10
-  const Task_Status_Last_Row= 28 //Row 28. The last section on the list is ESN Western macedonia at row 28. There are 3 more empty rows just in case. Just increase this number accordingly.
+  const Task_Status_Last_Row = 28 //Row 28. The last section on the list is ESN Western macedonia at row 28. There are 3 more empty rows just in case. Just increase this number accordingly.
   const Task_Status_Row_Range = Task_Status_Last_Row - Task_Status_Start_Row
 
 //Email List on each sheet

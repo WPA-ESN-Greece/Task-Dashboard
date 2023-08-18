@@ -1,55 +1,46 @@
-var ss = SpreadsheetApp.getActiveSpreadsheet()
-
-//Task Object
-var taskObj =
+function onOpen()
 {
-  title: "",
-  description: "",
-  reference: "",
-  url: "",
-  conatctPerson: "",
-  deadLine: "",
-  daysLeft: ""
+  initMenu()
 }
 
-function onEdit(){
-
+function onEdit()
+{
   //Sections
-  var SectionsMail = ss.getSheetByName("Sections").getRange('B9').getValue()
+  var SectionsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("Sections").getRange('B9').getValue()
   newTaskEmailTo("Sections",SectionsMail)
 
   //👩‍💼 Presidents
-  var PresidentsMail = ss.getSheetByName("👩‍💼 Presidents").getRange('B9').getValue()
+  var PresidentsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("👩‍💼 Presidents").getRange('B9').getValue()
   newTaskEmailTo("👩‍💼 Presidents",PresidentsMail)
 
   //🙌 VPs
-  var VicePresidentsMail = ss.getSheetByName("🙌 VPs").getRange('B9').getValue()
+  var VicePresidentsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🙌 VPs").getRange('B9').getValue()
   newTaskEmailTo("🙌 VPs",VicePresidentsMail)
 
   //💸Treasurers
-  var TreasurersMail = ss.getSheetByName("💸Treasurers").getRange('B9').getValue()
+  var TreasurersMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("💸Treasurers").getRange('B9').getValue()
   newTaskEmailTo("💸Treasurers",TreasurersMail)
 
   //🎨CMs
-  var CMsMail = ss.getSheetByName("🎨CMs").getRange('B9').getValue()
+  var CMsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🎨CMs").getRange('B9').getValue()
   newTaskEmailTo("🎨CMs",CMsMail)
 
   //💻WPAs
-  var WPAsMail = ss.getSheetByName("💻WPAs").getRange('B9').getValue()
+  var WPAsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("💻WPAs").getRange('B9').getValue()
   newTaskEmailTo("💻WPAs",WPAsMail)
 
   //🌟PMs
-  var PMsMail = ss.getSheetByName("🌟PMs").getRange('B9').getValue()
+  var PMsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🌟PMs").getRange('B9').getValue()
   newTaskEmailTo("🌟PMs",PMsMail)
 
   //🤝 ParMans
-  var ParMansMail = ss.getSheetByName("🤝 ParMans").getRange('B9').getValue()
+  var ParMansMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🤝 ParMans").getRange('B9').getValue()
   newTaskEmailTo("🤝 ParMans",ParMansMail)
-
 }
 
 
-function dailyDeadlineCheck(){
+function dailyDeadlineCheck()
+{
 
   //Sections
   dailyEmailReminder("Sections")
@@ -77,3 +68,20 @@ function dailyDeadlineCheck(){
 
 }
 
+function addNewTask()
+{
+  if (checkGroupMembership() === true){newTaskColumn()}
+  else {return}
+}
+
+function sortTasks()
+{
+  if (checkGroupMembership() === true){insertionSort()}
+  else {return}
+}
+
+function archivePassedTasks()
+{
+  if (checkGroupMembership() === true){passedTasksArchive()}
+  else {return}
+}

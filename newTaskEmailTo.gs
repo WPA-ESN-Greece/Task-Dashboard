@@ -1,33 +1,35 @@
-function newTaskEmailTo(sheetName, emailAddress) {
+function newTaskEmailTo(sheetName, emailAddress) 
+{
+  var subject = "New Task reported in Dashboard for " + sheetName
 
-  var SUBJECT = "New Task reported in Dashboard for " + sheetName
+  var sheet = ss.getSheetByName(sheetName)
 
-  var Sheet = ss.getSheetByName(sheetName)
+  //Tasks Range
+  //var StartRow = 2
+  //var StartColumn = 4
+  //var LastRow = 8
+  var taskLastColumn = sheet.getLastColumn()
 
-  var StartRow = 2
-  var StartColumn = 4
-  var LastRow = 8
-  var LastColumn = Sheet.getLastColumn()
+  //var RowRange = LastRow - StartRow + 1
+  var taskColumnRange = taskLastColumn - Task_Start_Column + 1
 
-  var RowRange = LastRow - StartRow + 1
-  var ColumnRange = LastColumn - StartColumn + 1
-
-  var TasksRange = Sheet.getRange(StartRow, StartColumn, RowRange, ColumnRange)
+  var tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, taskColumnRange)
 
 
-  var TasksValues = TasksRange.getValues()
-  var TaskUrlValue = Sheet.getRange(4, StartColumn, 1, ColumnRange).getRichTextValues()
+  var tasksValues = tasksRange.getValues()
+  var taskUrlValue = sheet.getRange(4, Task_Start_Column, 1, taskColumnRange).getRichTextValues()
 
-  for (var i = 0; i < ColumnRange + 1; i++) {
-    if (TasksValues[5][i] == "Ready to Email" && TasksValues[0][i] != "") {
-
-      taskObj.title = TasksValues[0][i]
-      taskObj.description = TasksValues[1][i]
-      taskObj.reference = TaskUrlValue[0][i].getText()
-      taskObj.url = TaskUrlValue[0][i].getLinkUrl()
-      taskObj.conatctPerson = TasksValues[3][i]
-      taskObj.deadLine = Utilities.formatDate(TasksValues[4][i], "Europe/Athens", "dd/MM/yyyy")
-      taskObj.daysLeft = TasksValues[6][i]
+  for (var i = 0; i < taskColumnRange + 1; i++)  //ColumnRange
+  {
+    if (tasksValues[5][i] === READY_TO_EMAIL && tasksValues[0][i] != "") 
+    {
+      taskObj.title = tasksValues[0][i]
+      taskObj.description = tasksValues[1][i]
+      taskObj.reference = taskUrlValue[0][i].getText()
+      taskObj.url = taskUrlValue[0][i].getLinkUrl()
+      taskObj.conatctPerson = tasksValues[3][i]
+      taskObj.deadLine = Utilities.formatDate(tasksValues[4][i], "Europe/Athens", "dd/MM/yyyy")
+      taskObj.daysLeft = tasksValues[6][i]
 
 
       var message = `
@@ -37,24 +39,21 @@ function newTaskEmailTo(sheetName, emailAddress) {
       <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
       <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
       <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
-      <hr>
-      <p>Oh! you have completed this task? Mark it as 'Done ✅' in the <a href="https://docs.google.com/spreadsheets/d/1nFLMVpC7scBY-my7AsxxJSu07JDYrX78QdNqSpvhgNE/edit?usp=sharing">Dashboard</a> to let us know 🙏</p>
       `//message end
 
       Logger.log("Sending email")
+
       MailApp.sendEmail
         ({
-
           to: emailAddress,
           cc: "",
-          subject: SUBJECT,
+          subject: subject,
           htmlBody: message,
           name: "Dashboard New Task"
-          
         })
 
         //Updates Notification Status Value
-        Sheet.getRange(7,StartColumn + i).setValue("Email Sent")
+        sheet.getRange(7,Task_Start_Column + i).setValue(EMAIL_SENT)
     }
   }
 }

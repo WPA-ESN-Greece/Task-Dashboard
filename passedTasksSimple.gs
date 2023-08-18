@@ -1,5 +1,5 @@
 // A function that moves passed tasks column after the "Passed tasks" column
-function passedTasksArchiveN()
+function passedTasksArchiveNs()
 {
   var startRow = Task_Start_Row 
   var endRow = Task_Status_Last_Row 
@@ -47,10 +47,17 @@ function passedTasksArchiveN()
 
       var columnToMoveRange = activeSheet.getRange(Task_Start_Row, currentColumn, rowRange, 1)
 
-      if (currentColumn === destinationColumnIndex - 1 || currentColumn === destinationColumnIndex) {return} // to avoid an error.
-
-      activeSheet.moveColumns(columnToMoveRange, destinationColumnIndex)
-      Logger.log("WE DID IT!")
+      if (currentColumn === destinationColumnIndex) {return} // to avoid an error.
+      else if(currentColumn === destinationColumnIndex - 1)
+      {
+        passedTasksArchiveNs() //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      }
+      else
+      {
+        activeSheet.moveColumns(columnToMoveRange, destinationColumnIndex)
+        Logger.log("WE DID IT!")
+      }
+      
     }
     //else{Logger.log("WE DIDNT DO IT")}
     

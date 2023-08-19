@@ -1,14 +1,3 @@
-  //var startRow = 2
-  //var endRow = 31
-  //var rowRange = endRow - startRow
-  //var startColumn = 5
-//var activeSheet = ss.getActiveSheet()
-  //var lastColumn = activeSheet.getLastColumn()
-  //var columnRangeArr = activeSheet.getRange(startRow, startColumn, 1, lastColumn - startColumn).getValues().join().split(',').filter(filterEmpty)
-
-//var columnRange = columnRangeArr.length
-
-
 function insertionSort()  
 {
   var activeSheet = ss.getActiveSheet()

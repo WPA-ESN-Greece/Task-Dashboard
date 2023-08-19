@@ -4,13 +4,8 @@ function newTaskEmailTo(sheetName, emailAddress)
 
   var sheet = ss.getSheetByName(sheetName)
 
-  //Tasks Range
-  //var StartRow = 2
-  //var StartColumn = 4
-  //var LastRow = 8
   var taskLastColumn = sheet.getLastColumn()
 
-  //var RowRange = LastRow - StartRow + 1
   var taskColumnRange = taskLastColumn - Task_Start_Column + 1
 
   var tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, taskColumnRange)
@@ -19,7 +14,7 @@ function newTaskEmailTo(sheetName, emailAddress)
   var tasksValues = tasksRange.getValues()
   var taskUrlValue = sheet.getRange(4, Task_Start_Column, 1, taskColumnRange).getRichTextValues()
 
-  for (var i = 0; i < taskColumnRange + 1; i++)  //ColumnRange
+  for (var i = 0; i < taskColumnRange + 1; i++)
   {
     if (tasksValues[5][i] === READY_TO_EMAIL && tasksValues[0][i] != "") 
     {

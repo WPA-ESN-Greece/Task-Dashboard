@@ -2,12 +2,8 @@ function dailyEmailReminder(sheetName)
 {
   var sheet = ss.getSheetByName(sheetName)
 
-  //var startRow = TaskStartRow //2
-  //var StartColumn = taskStartColumn//4 TaskStartColumn
-  //var LastRow = taskLastRow//8 TaskLastRow
   var taskLastColumn = sheet.getLastColumn()
 
-  //var TaskRowRange = TaskLastRow - TaskStartRow + 1
   var columnRange = taskLastColumn - Task_Start_Column + 1
 
   var tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, columnRange)

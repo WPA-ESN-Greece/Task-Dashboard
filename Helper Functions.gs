@@ -8,11 +8,21 @@ function checkGroupMembership()
 {
   var userEmail = Session.getActiveUser().getEmail();
 
-  var groupMembers = GroupsApp.getGroupByEmail(GOOGLE_GORUP_PERMITION1).getUsers().concat(GroupsApp.getGroupByEmail(GOOGLE_GORUP_PERMITION2).getUsers()).join(",")
-  Logger.log(groupMembers)
+  let allMembers = []
+  
+  GOOGLE_GORUPS_PERMITION.forEach(
+    function getUsersFromGroup(groupEmail)
+    {
+      allMembersTemp = GroupsApp.getGroupByEmail(groupEmail).getUsers().forEach(member => allMembers.push(member))
+    }
+  )
 
-  var isMember = groupMembers.includes(userEmail)
-  //var isMember = isMemberArr
+  allMembers = allMembers.join()
+
+  Logger.log("All Members: " + allMembers)
+  
+  var isMember = allMembers.includes(userEmail)
+
   Logger.log(isMember + " isMember")
   
   if (isMember) {
@@ -36,6 +46,7 @@ function filterEmpty(element){
  return element !== null && element !== undefined && element !== '' && element !== ' ' && !Number.isNaN(element) 
 }
 
+
 function findArrayIndexOfText(array, searchText)
 {
   return array.findIndex(function(cellValue)  
@@ -44,11 +55,3 @@ function findArrayIndexOfText(array, searchText)
   }) + 1; // Adding 1 to convert from 0-based index to 1-based index.
 }
 
-
-//TO DELETE
-//ownList(tasksData.map(x => x[j]))
-/*function ownList(a) {
-  return a.length == 0
-      ? []
-      : [[a[0]]].concat(ownList(a.slice(1))) 
-}*/

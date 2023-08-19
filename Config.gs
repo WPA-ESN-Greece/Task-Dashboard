@@ -46,5 +46,5 @@ var activeSheet = ss.getActiveSheet()
   const PASSED_TASKS_COLUMN_HEADER = "Passed Tasks"
 
 //Google Group of accounts that can run sorting and create new tasks.
-const GOOGLE_GORUP_PERMITION1 = "nb@esngreece.gr"
-const GOOGLE_GORUP_PERMITION2 = "nb-support@esngreece.gr"
+const GOOGLE_GORUPS_PERMITION = ["nb@esngreece.gr", "nb-support@esngreece.gr"]
+

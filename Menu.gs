@@ -6,7 +6,7 @@ function initMenu()
   
   menu.addItem("➕ Add New Task", "addNewTask")
   menu.addItem("🧙‍♂️ Sort Current Tasksheet", "sortTasks")
-  menu.addItem("📂 Archive Passed Tasks", "passedTasksArchive")
+  menu.addItem("📂 Archive Completed Tasks", "archiveCompletedTasks")
   
   menu.addToUi()
 }

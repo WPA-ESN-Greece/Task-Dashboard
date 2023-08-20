@@ -1,7 +1,7 @@
 //Configuration of constant values
 
 //Systeam Global Variables
-var ss = SpreadsheetApp.getActiveSpreadsheet()
+var ss = SpreadsheetApp.getActiveSpreadsheet() 
 var ui = SpreadsheetApp.getUi()
 var activeSheet = ss.getActiveSheet()
 
@@ -43,7 +43,7 @@ var activeSheet = ss.getActiveSheet()
 
 //Days Left Values
   const  PASSED = "Passed"
-  const PASSED_TASKS_COLUMN_HEADER = "Passed Tasks"
+  const PASSED_TASKS_COLUMN_HEADER = "Completed Tasks"
 
 //Google Group of accounts that can run sorting and create new tasks.
 const GOOGLE_GORUPS_PERMITION = ["nb@esngreece.gr", "nb-support@esngreece.gr"]

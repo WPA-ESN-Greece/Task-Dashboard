@@ -41,7 +41,6 @@ function onEdit()
 
 function dailyDeadlineCheck()
 {
-
   //Sections
   dailyEmailReminder("Sections")
 
@@ -70,18 +69,44 @@ function dailyDeadlineCheck()
 
 function addNewTask()
 {
-  if (checkGroupMembership() === true){newTaskColumn()}
+  if (checkGroupMembership() === true && showAlert(
+    "➕ Add New Task",`You are about to insert a new task column to the left of Column E on the active sheet [${activeSheet.getName()}].
+    Are you sure you want to continue?`,
+    ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
+  {
+    newTaskColumn()
+  }
   else {return}
 }
 
 function sortTasks()
 {
-  if (checkGroupMembership() === true){insertionSort()}
+  if (checkGroupMembership() === true && showAlert(
+    "🧙‍♂️ Sort Current Tasksheet",`You are about to sort the task colums on the active sheet [${activeSheet.getName()}].
+    Are you sure you want to continue?`,
+    ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
+  {
+    insertionSort()
+
+    showAlert(
+    "🧙‍♂️ Sort Current Tasksheet",`Tasks on sheet [${activeSheet.getName()}] should now be sorted.`,
+    ui.ButtonSet.OK)
+  }
   else {return}
 }
 
-function archivePassedTasks()
+function archiveCompletedTasks()
 {
-  if (checkGroupMembership() === true){passedTasksArchive()}
+  if (checkGroupMembership() === true && showAlert(
+    "📂 Archive Completed Tasks",`You are about to "archive" the completed task colums on the active sheet [${activeSheet.getName()}].
+    Are you sure you want to continue?`,
+    ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
+    {
+      passedTasksArchive()
+
+      showAlert(
+    "📂 Archive Completed Tasks",`Completed Tasks on sheet [${activeSheet.getName()}] should now be "Archived" on the right side of the "${PASSED_TASKS_COLUMN_HEADER}" column.`,
+    ui.ButtonSet.OK)
+    }
   else {return}
 }

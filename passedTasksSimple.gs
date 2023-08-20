@@ -49,7 +49,7 @@ function passedTasksArchive()
       if (currentColumn === destinationColumnIndex) {return} // to avoid an error.
       else if(currentColumn === destinationColumnIndex - 1)
       {
-        passedTasksArchiveNs() //!This is a recursion of the same function.
+        passedTasksArchive() //!This is a recursion of the same function.
       }
       else
       {

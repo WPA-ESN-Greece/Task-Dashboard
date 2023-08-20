@@ -55,3 +55,40 @@ function findArrayIndexOfText(array, searchText)
   }) + 1; // Adding 1 to convert from 0-based index to 1-based index.
 }
 
+//Toas Function (those little messages on bottom right).
+function toast(message, tittle, timeoutSeconds){
+  ss.toast(message, tittle, timeoutSeconds)
+}
+
+//Confirmation Alert
+/**
+ * Displays a custom alert dialog box in Google Apps Script.
+ *
+ * @param {string} title - The title to display in the dialog box.
+ * @param {string} message - The message to display in the dialog box.
+ * @param {GoogleAppsScript.Base.Ui.ButtonSet} buttonsSet - The set of buttons to display in the dialog box.
+ *   Possible values are:
+ *   - `ui.ButtonSet.OK`: Display an OK button.
+ *   - `ui.ButtonSet.OK_CANCEL`: Display OK and Cancel buttons.
+ *   - `ui.ButtonSet.YES_NO`: Display Yes and No buttons.
+ *   - `ui.ButtonSet.YES_NO_CANCEL`: Display Yes, No, and Cancel buttons.
+ *
+ * @returns {GoogleAppsScript.Base.Ui.Button} The button that was clicked in the dialog box.
+ */
+function showAlert(title, message, buttonsOptions)
+{
+  //var message = "Message"
+  //var title = "Title"
+  /*
+  const buttonsOptions = {
+    Ok: ui.ButtonSet.OK,
+    Ok_Cancel: ui.ButtonSet.OK_CANCEL,
+    Yes_No: ui.ButtonSet.YES_NO,
+    Yes_No_Cancel: ui.ButtonSet.YES_NO_CANCEL
+  }*/
+
+  //var buttonsSet = buttonsOptions.Ok_Cancel
+
+  var response  = ui.alert(String(title), String(message), buttonsOptions)
+  return response
+}

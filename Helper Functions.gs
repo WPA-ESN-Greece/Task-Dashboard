@@ -1,6 +1,6 @@
 function newTaskColumn()
 {
-  activeSheet.insertColumnBefore(5)
+  activeSheet.insertColumnAfter(4)
 }
 
 

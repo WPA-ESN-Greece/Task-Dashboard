@@ -1,7 +1,5 @@
 function newTaskEmailTo(sheetName, emailAddress) 
 {
-  var subject = "New Task reported in Dashboard for " + sheetName
-
   var sheet = ss.getSheetByName(sheetName)
 
   var taskLastColumn = sheet.getLastColumn()
@@ -26,6 +24,8 @@ function newTaskEmailTo(sheetName, emailAddress)
       taskObj.deadLine = Utilities.formatDate(tasksValues[4][i], "Europe/Athens", "dd/MM/yyyy")
       taskObj.daysLeft = tasksValues[6][i]
 
+      var subject = "New Task reported in Dashboard for " + sheetName
+      var senderName = "⚠️ Dashboard New Task ⚠️"
 
       var message = `
       <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
@@ -44,10 +44,10 @@ function newTaskEmailTo(sheetName, emailAddress)
           cc: "",
           subject: subject,
           htmlBody: message,
-          name: "Dashboard New Task"
+          name: senderName
         })
 
-        //Updates Notification Status Value
+        //Updates Notification Status Value from "Email Ready" to "Email Sent".
         sheet.getRange(7,Task_Start_Column + i).setValue(EMAIL_SENT)
     }
   }

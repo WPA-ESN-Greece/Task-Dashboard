@@ -1,8 +1,8 @@
-//Configuration of constant values
+//Configuration File for easy customization.
 
 //Systeam Global Variables
 var ss = SpreadsheetApp.getActiveSpreadsheet() 
-var ui = SpreadsheetApp.getUi()
+//var ui = SpreadsheetApp.getUi()
 var activeSheet = ss.getActiveSheet()
 
 //Task Object
@@ -43,8 +43,27 @@ var activeSheet = ss.getActiveSheet()
 
 //Days Left Values
   const  PASSED = "Passed"
-  const PASSED_TASKS_COLUMN_HEADER = "Completed Tasks"
+  const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
 
 //Google Group of accounts that can run sorting and create new tasks.
 const GOOGLE_GORUPS_PERMITION = ["nb@esngreece.gr", "nb-support@esngreece.gr"]
 
+//Sheets Names
+const SECTIONS_SHEET_NAME = "Sections"
+const PRESIDENTS_SHEET_NAME = "👩‍💼 Presidents"
+const VICE_PRESIDENTS_SHEET_NAME = "🙌 VPs"
+const TREASURERS_SHEET_NAME = "💸Treasurers" 
+const CMS_SHEET_NAME = "🎨CMs"
+const WPAS_SHEET_NAME = "💻WPAs"
+const PROJECT_MANAGERS_SHEET_NAME = "🌟PMs"
+const PARTNERSHIPS_MANAGERS_SHEET_NAME = "🤝 ParMans"
+
+//Communities emails
+const SECTIONS_EMAIL = 'wpa+sections@esngreece.gr'//ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B9').getValue()
+const PRESIDENTS_EMAIL = 'wpa+pr@esngreece.gr'//ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B9').getValue()
+const VICE_PRESIDENTS_EMAIL = 'wpa+vps@esngreece.gr'//ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B9').getValue()
+const TREASURERS_EMAIL = "wpa+tr@esngreece.gr" //ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B9').getValue()
+const CMS_EMAIL = 'wpa+cms@esngreece.gr'//ss.getSheetByName(CMS_SHEET_NAME).getRange('B9').getValue()
+const WPAS_EMAIL = 'wpa+wpas@esngreece.gr'//ss.getSheetByName(WPAS_SHEET_NAME).getRange('B9').getValue()
+const PROJECT_MANAGERS_EMAIL = 'wpa+projman@esngreece.gr'//ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B9').getValue()
+const PARTNERSHIPS_MANAGERS_EMAIL = 'wpa+parman@esngreece.gr'//ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B9').getValue()

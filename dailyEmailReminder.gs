@@ -64,6 +64,7 @@ function dailyEmailReminder(sheetName)
             `//message end
 
             var subject = "🎗Reminder for Task in Dashboard for " + sheetName
+            var senderName = "⚠️ Dashboard Reminder ⚠️"
             var recipient = emailAddresses[i]
 
             MailApp.sendEmail
@@ -72,7 +73,7 @@ function dailyEmailReminder(sheetName)
               cc: "",
               subject: subject,
               htmlBody: message,
-              name: "Dashboard Reminder"
+              name: senderName
             })
           }
         }

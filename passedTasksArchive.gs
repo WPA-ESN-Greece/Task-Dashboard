@@ -17,8 +17,6 @@ function passedTasksArchive()
 
   var Data = activeSheet.getRange(Task_Start_Row, Task_Start_Column, rowRange, columnRange).getValues()
 
-  Logger.log("@@@@ "+ Data[0])
-
   var currentTaskStatuses = []
   var taskIsDone = false
 
@@ -33,7 +31,7 @@ function passedTasksArchive()
       taskIsDone = currentTaskStatuses.every(element => element === TASK_DONE || element === TASK_NOT_APPLICABLE)
     }
 
-    if ((Data[6][i] === PASSED) && (taskIsDone === true))
+    if ((Data[6][i] === PASSED) && (taskIsDone === true) && Data[0][i] != "")
     {
       var currentColumn = Data[0].findIndex(
         function(cellValue) 
@@ -46,7 +44,7 @@ function passedTasksArchive()
 
       var columnToMoveRange = activeSheet.getRange(Task_Start_Row, currentColumn, rowRange, 1)
 
-      if (currentColumn === destinationColumnIndex) {return} // to avoid an error.
+      if (currentColumn === destinationColumnIndex) {return} // to avoid an error, and prevent an infinity loop on the following recursion.
       else if(currentColumn === destinationColumnIndex - 1)
       {
         passedTasksArchive() //!This is a recursion of the same function.
@@ -58,9 +56,6 @@ function passedTasksArchive()
       }
       
     }
-    //else{Logger.log("WE DIDNT DO IT")}
-    
-    Logger.log(currentTaskStatuses)
     
     //Reset the array.
     var currentTaskStatuses = []

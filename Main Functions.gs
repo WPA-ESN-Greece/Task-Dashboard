@@ -1,74 +1,68 @@
 function onOpen()
 {
-  initMenu()
+  if (checkGroupMembership() === true){initMenu()}
+  //initMenu()
 }
 
 function onEdit()
 {
   //Sections
-  var SectionsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("Sections").getRange('B9').getValue()
-  newTaskEmailTo("Sections",SectionsMail)
+  newTaskEmailTo(SECTIONS_SHEET_NAME, SECTIONS_EMAIL)
 
   //👩‍💼 Presidents
-  var PresidentsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("👩‍💼 Presidents").getRange('B9').getValue()
-  newTaskEmailTo("👩‍💼 Presidents",PresidentsMail)
+  newTaskEmailTo(PRESIDENTS_SHEET_NAME, PRESIDENTS_EMAIL)
 
   //🙌 VPs
-  var VicePresidentsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🙌 VPs").getRange('B9').getValue()
-  newTaskEmailTo("🙌 VPs",VicePresidentsMail)
+  newTaskEmailTo(VICE_PRESIDENTS_SHEET_NAME, VICE_PRESIDENTS_EMAIL)
 
   //💸Treasurers
-  var TreasurersMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("💸Treasurers").getRange('B9').getValue()
-  newTaskEmailTo("💸Treasurers",TreasurersMail)
+  newTaskEmailTo(TREASURERS_SHEET_NAME, TREASURERS_EMAIL)
 
   //🎨CMs
-  var CMsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🎨CMs").getRange('B9').getValue()
-  newTaskEmailTo("🎨CMs",CMsMail)
+  newTaskEmailTo(CMS_SHEET_NAME, CMS_EMAIL)
 
   //💻WPAs
-  var WPAsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("💻WPAs").getRange('B9').getValue()
-  newTaskEmailTo("💻WPAs",WPAsMail)
+  newTaskEmailTo(WPAS_SHEET_NAME, WPAS_EMAIL)
 
   //🌟PMs
-  var PMsMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🌟PMs").getRange('B9').getValue()
-  newTaskEmailTo("🌟PMs",PMsMail)
+  newTaskEmailTo(PROJECT_MANAGERS_SHEET_NAME, PROJECT_MANAGERS_EMAIL)
 
   //🤝 ParMans
-  var ParMansMail = 'wpa+sections@esngreece.gr'//ss.getSheetByName("🤝 ParMans").getRange('B9').getValue()
-  newTaskEmailTo("🤝 ParMans",ParMansMail)
+  newTaskEmailTo(PARTNERSHIPS_MANAGERS_SHEET_NAME, PARTNERSHIPS_MANAGERS_EMAIL)
 }
 
 
 function dailyDeadlineCheck()
 {
   //Sections
-  dailyEmailReminder("Sections")
+  dailyEmailReminder(SECTIONS_SHEET_NAME)
 
   //👩‍💼 Presidents
-  dailyEmailReminder("👩‍💼 Presidents")
+  dailyEmailReminder(PRESIDENTS_SHEET_NAME)
 
   //🙌 VPs
-  dailyEmailReminder("🙌 VPs")
+  dailyEmailReminder(VICE_PRESIDENTS_SHEET_NAME)
 
   //💸Treasurers
-  dailyEmailReminder("💸Treasurers")
+  dailyEmailReminder(TREASURERS_SHEET_NAME)
 
   //🎨CMs
-  dailyEmailReminder("🎨CMs")
+  dailyEmailReminder(CMS_SHEET_NAME)
 
   //💻WPAs
-  dailyEmailReminder("💻WPAs")
+  dailyEmailReminder(WPAS_SHEET_NAME)
 
   //🌟PMs
-  dailyEmailReminder("🌟PMs")
+  dailyEmailReminder(PROJECT_MANAGERS_SHEET_NAME)
 
   //🤝 ParMans
-  dailyEmailReminder("🤝 ParMans")
-
+  dailyEmailReminder(PARTNERSHIPS_MANAGERS_SHEET_NAME)
 }
 
 function addNewTask()
 {
+  var ui = SpreadsheetApp.getUi()
+
   if (checkGroupMembership() === true && showAlert(
     "➕ Add New Task",`You are about to insert a new task column to the left of Column E on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,
@@ -81,6 +75,8 @@ function addNewTask()
 
 function sortTasks()
 {
+  var ui = SpreadsheetApp.getUi()
+
   if (checkGroupMembership() === true && showAlert(
     "🧙‍♂️ Sort Current Tasksheet",`You are about to sort the task colums on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,
@@ -97,6 +93,8 @@ function sortTasks()
 
 function archiveCompletedTasks()
 {
+  var ui = SpreadsheetApp.getUi()
+
   if (checkGroupMembership() === true && showAlert(
     "📂 Archive Completed Tasks",`You are about to "archive" the completed task colums on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,

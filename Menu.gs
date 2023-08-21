@@ -2,6 +2,7 @@
 function initMenu() 
 {
   var ui = SpreadsheetApp.getUi()
+  
   var menu = ui.createMenu("🌌 ESN Menu")
   
   menu.addItem("➕ Add New Task", "addNewTask")
@@ -10,4 +11,3 @@ function initMenu()
   
   menu.addToUi()
 }
-

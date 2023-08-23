@@ -26,7 +26,7 @@ var activeSheet = ss.getActiveSheet()
 
 //Tasks Range
   const Task_Start_Row = 2 //Row 2
-  const Task_Start_Column = 5 //Column E // κανονικά είναι 4 (D) για δοκιμή το κάνω 5.
+  const Task_Start_Column = 5 //Column E 
   const Task_Last_Row = 9 //Row 9
   const Task_Row_Range = Task_Last_Row - Task_Start_Row + 1
 
@@ -78,11 +78,11 @@ const PROJECT_MANAGERS_SHEET_NAME = "🌟PMs"
 const PARTNERSHIPS_MANAGERS_SHEET_NAME = "🤝 ParMans"
 
 //Communities emails
-const SECTIONS_EMAIL = 'wpa+sections@esngreece.gr'//ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B9').getValue()
-const PRESIDENTS_EMAIL = 'wpa+pr@esngreece.gr'//ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B9').getValue()
-const VICE_PRESIDENTS_EMAIL = 'wpa+vps@esngreece.gr'//ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B9').getValue()
-const TREASURERS_EMAIL = "wpa+tr@esngreece.gr" //ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B9').getValue()
-const CMS_EMAIL = 'wpa+cms@esngreece.gr'//ss.getSheetByName(CMS_SHEET_NAME).getRange('B9').getValue()
-const WPAS_EMAIL = 'wpa+wpas@esngreece.gr'//ss.getSheetByName(WPAS_SHEET_NAME).getRange('B9').getValue()
-const PROJECT_MANAGERS_EMAIL = 'wpa+projman@esngreece.gr'//ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B9').getValue()
-const PARTNERSHIPS_MANAGERS_EMAIL = 'wpa+parman@esngreece.gr'//ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B9').getValue()
+const SECTIONS_EMAIL = 'wpa+sections@esngreece.gr'//ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B11').getValue()
+const PRESIDENTS_EMAIL = 'wpa+pr@esngreece.gr'//ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
+const VICE_PRESIDENTS_EMAIL = 'wpa+vps@esngreece.gr'//ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
+const TREASURERS_EMAIL = "wpa+tr@esngreece.gr" //ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B11').getValue()
+const CMS_EMAIL = 'wpa+cms@esngreece.gr'//ss.getSheetByName(CMS_SHEET_NAME).getRange('B11').getValue()
+const WPAS_EMAIL = 'wpa+wpas@esngreece.gr'//ss.getSheetByName(WPAS_SHEET_NAME).getRange('B11').getValue()
+const PROJECT_MANAGERS_EMAIL = 'wpa+projman@esngreece.gr'//ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B11').getValue()
+const PARTNERSHIPS_MANAGERS_EMAIL = 'wpa+parman@esngreece.gr'//ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B11').getValue()

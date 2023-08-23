@@ -8,12 +8,10 @@ function insertionSort()
     var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
     var passedTasksColumnIndex = findArrayIndexOfText(firstRowValues, PASSED_TASKS_COLUMN_HEADER)
 
-  var lastColumn = passedTasksColumnIndex //activeSheet.getLastColumn()
+  var lastColumn = passedTasksColumnIndex
 
   var columnRangeArr = activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, lastColumn - Task_Start_Column).getValues().join().split(',').filter(filterEmpty)
   
-
-  var lastColumn = activeSheet.getLastColumn()
   var columnRangeArr = activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, lastColumn - Task_Start_Column).getValues().join().split(',').filter(filterEmpty)
 
   var columnRange = columnRangeArr.length

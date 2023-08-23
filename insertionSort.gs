@@ -2,17 +2,19 @@ function insertionSort()
 {
   var activeSheet = ss.getActiveSheet()
 
-  var startRow = Task_Start_Row //2
-  var endRow = Task_Status_Last_Row//31
-  var rowRange = endRow - startRow
-  var startColumn = Task_Start_Column //5
-  
-  var lastColumn = activeSheet.getLastColumn()
-  var columnRangeArr = activeSheet.getRange(startRow, startColumn, 1, lastColumn - startColumn).getValues().join().split(',').filter(filterEmpty)
+  var rowRange = Task_Status_Last_Row - Task_Start_Row
+
+  //Search for the "Completed Tasks" Colimn Index.
+    var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
+    var passedTasksColumnIndex = findArrayIndexOfText(firstRowValues, PASSED_TASKS_COLUMN_HEADER)
+
+  var lastColumn = passedTasksColumnIndex //activeSheet.getLastColumn()
+
+  var columnRangeArr = activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, lastColumn - Task_Start_Column).getValues().join().split(',').filter(filterEmpty)
   
 
   var lastColumn = activeSheet.getLastColumn()
-  var columnRangeArr = activeSheet.getRange(startRow, startColumn, 1, lastColumn - startColumn).getValues().join().split(',').filter(filterEmpty)
+  var columnRangeArr = activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, lastColumn - Task_Start_Column).getValues().join().split(',').filter(filterEmpty)
 
   var columnRange = columnRangeArr.length
 
@@ -21,7 +23,7 @@ function insertionSort()
  
 
   //Days left array for sorting
-  var daysLeftArray = activeSheet.getRange(startRow + 4, startColumn, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate){
+  var daysLeftArray = activeSheet.getRange(Task_Deadlines, Task_Start_Column, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate){
 
     var differenceInMilliseconds = new Date(arrayDate) - new Date(currentDate)
     var differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24))
@@ -36,15 +38,18 @@ function insertionSort()
   {
     let key = daysLeftArray[i]
 
-    // Getting i values to memory
-        //Task details
-        var tempArrayTaski = activeSheet.getRange(startRow, startColumn + i, 4, 1).getRichTextValues()
+    // Getting i values to memory.
+        //Task details.
+        var tempArrayTaski = activeSheet.getRange(Task_Start_Row, Task_Start_Column + i, 5, 1).getRichTextValues()
         
-        //Task Deadline and Email Status
-        var tempArrayTaskDatei = activeSheet.getRange(startRow + 4, startColumn + i, 2, 1).getValues()
+        //Task Deadline and Email Status..
+        var tempArrayTaskDatei = activeSheet.getRange(Task_Deadlines, Task_Start_Column + i, 2, 1).getValues()
 
-        //Sections Task Status
-        var tempArrayTaskStatusi = activeSheet.getRange(startRow + 8, startColumn + i, rowRange - 7, 1).getValues()
+        //Task Proof of Completion link.
+        var tempArrayTaskProofi = activeSheet.getRange(Task_Proof, Task_Start_Column + i, 1, 1).getRichTextValues()
+
+        //Sections Task Status.
+        var tempArrayTaskStatusi = activeSheet.getRange(Task_Status_Start_Row, Task_Start_Column + i, rowRange, 1).getValues()
 
     let j = i - 1
 
@@ -63,19 +68,21 @@ function insertionSort()
 
       // Getting j values to i. Move it to the right
 
-        //Task details
-        var tempArrayTask = activeSheet.getRange(startRow, startColumn + j, 4, 1).getRichTextValues()
-        activeSheet.getRange(startRow, startColumn + j+1, 4, 1).setRichTextValues(tempArrayTask)
+        //Task details up to Priority.
+        var tempArrayTask = activeSheet.getRange(Task_Start_Row, Task_Start_Column + j, 5, 1).getRichTextValues()
+        activeSheet.getRange(Task_Start_Row, Task_Start_Column + j + 1, 5, 1).setRichTextValues(tempArrayTask)
 
-        //Task Deadline and Email Status
-        var tempArrayTaskDate = activeSheet.getRange(startRow + 4, startColumn + j, 2, 1).getValues()
-        activeSheet.getRange(startRow + 4, startColumn + j+1, 2, 1).setValues(tempArrayTaskDate)
+        //Task Deadline and Email Status.
+        var tempArrayTaskDate = activeSheet.getRange(Task_Deadlines, Task_Start_Column + j, 2, 1).getValues()
+        activeSheet.getRange(Task_Deadlines, Task_Start_Column + j + 1, 2, 1).setValues(tempArrayTaskDate)
+
+        //Task Proof of Completion link.
+        var tempArrayTaskProof = activeSheet.getRange(Task_Proof, Task_Start_Column + j, 1, 1).getRichTextValues()
+        activeSheet.getRange(Task_Proof, Task_Start_Column + j + 1, 1, 1).setRichTextValues(tempArrayTaskProof)
 
         //Sections Task Status
-        var tempArrayTaskStatus = activeSheet.getRange(startRow + 8, startColumn + j, rowRange - 7, 1).getValues()
-        activeSheet.getRange(startRow + 8, startColumn + j+1, rowRange - 7, 1).setValues(tempArrayTaskStatus)
-
-      
+        var tempArrayTaskStatus = activeSheet.getRange(Task_Status_Start_Row, Task_Start_Column + j, rowRange, 1).getValues()
+        activeSheet.getRange(Task_Status_Start_Row, Task_Start_Column + j + 1, rowRange, 1).setValues(tempArrayTaskStatus)
 
       j--;
 
@@ -85,14 +92,17 @@ function insertionSort()
     daysLeftArray[j + 1] = key
 
     // Getting i values from memory to j. Mobing it to the 
-        //Task details
-        activeSheet.getRange(startRow, startColumn + j+1, 4, 1).setRichTextValues(tempArrayTaski)
+        //Task details up to Priority.
+        activeSheet.getRange(Task_Start_Row, Task_Start_Column + j + 1, 5, 1).setRichTextValues(tempArrayTaski)
 
         //Task Deadline and Email Status
-        activeSheet.getRange(startRow + 4, startColumn + j+1, 2, 1).setValues(tempArrayTaskDatei)
+        activeSheet.getRange(Task_Deadlines, Task_Start_Column + j + 1, 2, 1).setValues(tempArrayTaskDatei)
+
+        //Task Proof of Completion link.
+        activeSheet.getRange(Task_Proof, Task_Start_Column + j + 1, 1, 1).setRichTextValues(tempArrayTaskProofi)
 
         //Sections Task Status
-        activeSheet.getRange(startRow + 8, startColumn + j+1, rowRange - 7, 1).setValues(tempArrayTaskStatusi)
+        activeSheet.getRange(Task_Status_Start_Row, Task_Start_Column + j + 1, rowRange, 1).setValues(tempArrayTaskStatusi)
 
 
     Logger.log("Current Array after swaps: " + daysLeftArray)
@@ -100,19 +110,16 @@ function insertionSort()
     Logger.log("daysLeftArray[j + 1]: " + daysLeftArray[j + 1])
     
 
-    daysLeftArray = activeSheet.getRange(startRow + 4, startColumn, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate){
+    daysLeftArray = activeSheet.getRange(Task_Deadlines, Task_Start_Column, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate){
 
       var differenceInMilliseconds = new Date(arrayDate) - new Date(currentDate)
       var differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24))
       return Number(differenceInDays)+1
 
     })
-
     //daysLeftArray[j + 1] = key
     Logger.log("after while with i:" + i)
-    //var taskDeadLine = activeSheet.getRange(startRow, startColumn, 1, columnRange).getValues()
     Logger.log("After while " + daysLeftArray)
-
   }
     Logger.log("Final: " + daysLeftArray) 
 }

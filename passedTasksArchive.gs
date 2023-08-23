@@ -1,14 +1,12 @@
 // A function that moves passed tasks column after the "Passed tasks" column
 function passedTasksArchive()
 {
-  var startRow = Task_Start_Row 
-  var endRow = Task_Status_Last_Row 
-  var rowRange = endRow - startRow + 1
+  var rowRange = Task_Status_Last_Row - Task_Start_Row + 1
   var taskLastColumn = activeSheet.getLastColumn()
   
   var columnRange = taskLastColumn - Task_Start_Column + 1
   
-  //Search for the "Passed Tasks" Colimn Index.
+  //Search for the "Completed Tasks" Colimn Index.
   var searchText = PASSED_TASKS_COLUMN_HEADER
   var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
   
@@ -20,7 +18,6 @@ function passedTasksArchive()
   var currentTaskStatuses = []
   var taskIsDone = false
 
-
   for (let i = 0; i < passedTasksColumnIndex; i++) //i is for Columns. Data[Row][Col]
   {
     
@@ -31,7 +28,7 @@ function passedTasksArchive()
       taskIsDone = currentTaskStatuses.every(element => element === TASK_DONE || element === TASK_NOT_APPLICABLE)
     }
 
-    if ((Data[6][i] === PASSED) && (taskIsDone === true) && Data[0][i] != "")
+    if ((Data[7][i] === PASSED) && (taskIsDone === true) && Data[0][i] != "")
     {
       var currentColumn = Data[0].findIndex(
         function(cellValue) 

@@ -108,3 +108,21 @@ function archiveCompletedTasks()
     }
   else {return}
 }
+
+function showDocumentation()
+{
+  let title = "📚 Documentation"
+
+  var documentationMessage = HtmlService.createHtmlOutput(`<p style="
+    color: #3c4043;
+    line-height: 1.4em;
+    word-wrap: break-word;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    margin: 0
+    overflow: auto;">
+    You can find the documentation <a href="${DOCUMENTATION_LINK}"target="_blank">here</a>.</p>`).setWidth(400).setHeight(60)
+
+    SpreadsheetApp.getUi().showModalDialog(documentationMessage, title)
+}

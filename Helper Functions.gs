@@ -77,6 +77,7 @@ function toast(message, tittle, timeoutSeconds){
  */
 function showAlert(title, message, buttonsOptions)
 {
+  var ui = SpreadsheetApp.getUi()
   //var message = "Message"
   //var title = "Title"
   /*
@@ -91,4 +92,35 @@ function showAlert(title, message, buttonsOptions)
 
   var response  = ui.alert(String(title), String(message), buttonsOptions)
   return response
+}
+
+//Returns the URL of a sheet by its name.
+function getSheetURL(sheetName)
+{
+  var ss = SpreadsheetApp.getActiveSpreadsheet() 
+
+  // Get the sheet by its name
+  var sheet = ss.getSheetByName(sheetName)
+  
+  // Check if the sheet exists
+  if (sheet) 
+  {
+    // Get the ID of the spreadsheet
+    var spreadsheetId = ss.getId()
+    
+    // Get the sheet's index
+    var sheetId = sheet.getSheetId()
+    
+    // Construct the URL for the specific sheet
+    var sheetUrl = "https://docs.google.com/spreadsheets/d/" + spreadsheetId + "/edit#gid=" + sheetId
+    
+    Logger.log("sheetUrl " + sheetUrl)
+    
+    return sheetUrl
+  } 
+  else 
+  {
+    // If the sheet doesn't exist, return an error message
+    return "Sheet not found"
+  }
 }

@@ -1,3 +1,18 @@
+/**
+ * Sends email notifications for new tasks in a specified sheet.
+ *
+ * This function retrieves task data from the specified sheet and sends email notifications
+ * for tasks that are marked as ready to be emailed. It constructs email messages with task details
+ * such as title, priority, description, contact person, deadline, and more. After sending an email,
+ * it updates the notification status value in the sheet from "Email Ready" to "Email Sent."
+ *
+ * @function
+ * @name newTaskEmailTo
+ * @memberof module:Spreadsheet
+ * @param {string} sheetName - The name of the sheet containing the tasks to be processed.
+ * @param {string} emailAddress - The email address to which the notifications will be sent.
+ * @returns {void} This function does not return a value.
+ */
 function newTaskEmailTo(sheetName, emailAddress) 
 {
   var sheet = ss.getSheetByName(sheetName)

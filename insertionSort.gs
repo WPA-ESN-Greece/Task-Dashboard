@@ -1,3 +1,16 @@
+/**
+ * Sorts tasks on the active sheet using the insertion sort algorithm.
+ *
+ * This function sorts tasks based on their priority and deadline in ascending order.
+ * It uses the insertion sort algorithm to rearrange the tasks within the active sheet.
+ * The sorting criteria are priority and deadline, with higher priority tasks and tasks with
+ * earlier deadlines appearing first. The function updates the sheet with the sorted tasks.
+ *
+ * @function
+ * @name insertionSort
+ * @memberof module:Spreadsheet
+ * @returns {void} This function does not return a value.
+ */
 function insertionSort()  
 {
   var activeSheet = ss.getActiveSheet()
@@ -121,5 +134,3 @@ function insertionSort()
   }
     Logger.log("Final: " + daysLeftArray) 
 }
-
-

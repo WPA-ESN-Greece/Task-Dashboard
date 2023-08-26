@@ -1,4 +1,17 @@
 // A function that moves passed tasks column after the "Passed tasks" column
+/**
+ * Moves completed tasks columns after the "Passed tasks" column.
+ *
+ * This function iterates through the task columns and checks if a task is marked as "Passed" and
+ * all related task statuses are "Done" or "Not Applicable". If these conditions are met,
+ * the function moves the column containing the completed task after the "Passed tasks" column.
+ * This helps in archiving completed tasks in the spreadsheet.
+ *
+ * @function
+ * @name passedTasksArchive
+ * @memberof module:Spreadsheet
+ * @returns {void} This function does not return a value.
+ */
 function passedTasksArchive()
 {
   var rowRange = Task_Status_Last_Row - Task_Start_Row + 1

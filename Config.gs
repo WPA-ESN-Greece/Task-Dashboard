@@ -78,11 +78,11 @@ const PROJECT_MANAGERS_SHEET_NAME = "🌟PMs"
 const PARTNERSHIPS_MANAGERS_SHEET_NAME = "🤝 ParMans"
 
 //Communities emails
-const SECTIONS_EMAIL = 'wpa+sections@esngreece.gr'//ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B11').getValue()
-const PRESIDENTS_EMAIL = 'wpa+pr@esngreece.gr'//ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
-const VICE_PRESIDENTS_EMAIL = 'wpa+vps@esngreece.gr'//ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
-const TREASURERS_EMAIL = "wpa+tr@esngreece.gr" //ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B11').getValue()
-const CMS_EMAIL = 'wpa+cms@esngreece.gr'//ss.getSheetByName(CMS_SHEET_NAME).getRange('B11').getValue()
-const WPAS_EMAIL = 'wpa+wpas@esngreece.gr'//ss.getSheetByName(WPAS_SHEET_NAME).getRange('B11').getValue()
-const PROJECT_MANAGERS_EMAIL = 'wpa+projman@esngreece.gr'//ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B11').getValue()
-const PARTNERSHIPS_MANAGERS_EMAIL = 'wpa+parman@esngreece.gr'//ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B11').getValue()
+const SECTIONS_EMAIL = ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B11').getValue()
+const PRESIDENTS_EMAIL = ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
+const VICE_PRESIDENTS_EMAIL = ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
+const TREASURERS_EMAIL = ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B11').getValue()
+const CMS_EMAIL = ss.getSheetByName(CMS_SHEET_NAME).getRange('B11').getValue()
+const WPAS_EMAIL = ss.getSheetByName(WPAS_SHEET_NAME).getRange('B11').getValue()
+const PROJECT_MANAGERS_EMAIL = ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B11').getValue()
+const PARTNERSHIPS_MANAGERS_EMAIL = ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B11').getValue()

@@ -97,7 +97,7 @@ function dailyEmailReminder(sheetName)
 
           MailApp.sendEmail
           ({
-            to: "wpa+sections@esngreece.gr", //recipient,
+            to: recipient,
             cc: "",
             subject: subject,
             htmlBody: message,

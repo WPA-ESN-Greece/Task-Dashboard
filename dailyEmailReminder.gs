@@ -1,109 +1,177 @@
-function dailyEmailReminder(sheetName){
+/**
+ * Sends daily email reminders for tasks on the specified sheet.
+ *
+ * This function sends daily email reminders for tasks on the specified sheet. It checks the status and priority of each task
+ * and sends reminders to appropriate recipients based on priority and deadline. The recipients are determined by the
+ * email addresses stored in the sheet. The function handles tasks with different priorities, such as critical, high, and medium,
+ * and sends reminders accordingly. It also includes task details and links to the task sheet.
+ *
+ * @function
+ * @name dailyEmailReminder
+ * @memberof module:Spreadsheet
+ * @param {string} sheetName - The name of the sheet containing the tasks to send reminders for.
+ * @returns {void} This function does not return a value.
+ */
+function dailyEmailReminder(sheetName)
+{
+  Logger.log("Sheet: " + sheetName)
+  var sheet = ss.getSheetByName(sheetName)
 
-var Sheet = ss.getSheetByName(sheetName)
+  //Search for the "Completed Tasks" Colimn Index.
+    var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
+    var passedTasksColumnIndex = findArrayIndexOfText(firstRowValues, PASSED_TASKS_COLUMN_HEADER)
 
-var StartRow = 2
-var StartColumn = 4
-var LastRow = 8
-var LastColumn = Sheet.getLastColumn()
+  var taskLastColumn = passedTasksColumnIndex - 1 
 
-var RowRange = LastRow - StartRow + 1
-var ColumnRange = LastColumn - StartColumn + 1
+  var columnRange = taskLastColumn - Task_Start_Column + 1
 
-var TasksRange = Sheet.getRange(StartRow, StartColumn, RowRange, ColumnRange)
+  var tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, columnRange)
 
-var TasksValues = TasksRange.getValues()
-var TaskUrlValue = Sheet.getRange(4, StartColumn, 1, ColumnRange).getRichTextValues()
+  var tasksValues = tasksRange.getValues()
+  var taskUrlValue = sheet.getRange(Task_Start_Row + 2, Task_Start_Column, 1, columnRange).getRichTextValues()
 
-var emailsValues = Sheet.getRange('B10:B31').getValues().filter(n => n != "")
+  var emailsValues = sheet.getRange(EMAIL_RANGE).getValues().filter(n => n != "")
 
-var emailAddresses = []
+  var emailAddresses = []
 
-for (var i = 0; i < emailsValues.length; i++) {
-
-  emailAddresses.push(emailsValues[i][0])
-
-}
-
-//Task Status Range 
-var StartRowStatus = 10
-var LastRowStatus = 31
-var RowRangeStatus = LastRowStatus - StartRowStatus
-
-var StatusValues = Sheet.getRange(StartRowStatus, StartColumn, RowRangeStatus, ColumnRange).getValues()
-
-//Horizontal Loop
-for (var col = 0; col < ColumnRange; col++) {
-
-  Logger.log("Column " + col)
-
-  if (TasksValues[0][col] != "")
+  for (var i = 0; i < emailsValues.length; i++)
   {
-    //Vertical Values
-    for (var i = 0; i < emailsValues.length; i++) 
+    emailAddresses.push(emailsValues[i][0])
+  }
+
+  var taskStatusValues = sheet.getRange(Task_Status_Start_Row, Task_Start_Column, Task_Status_Row_Range, columnRange).getValues()
+  
+  //Horizontal Loop
+  for (var col = 0; col < columnRange; col++) 
+  {
+    Logger.log("Column " + col ) 
+
+
+    if (tasksValues[0][col] == "" || tasksValues[4][col] === TASK_PRIORITY_LOW || tasksValues[4][col] == "") {}
+    else
     {
-      
-      if (StatusValues[i][col] == "Done ✅") {}
-      else if (StatusValues[i][col] == "Not Applicable") {}
-      else
+      //Vertical Values
+      for (var i = 0; i < Task_Row_Range; i++) 
       {
-        Logger.log("Days Left: " + TasksValues[6][col])
-        if (TasksValues[6][col] >= 0 && TasksValues[6][col] < 4 || TasksValues[6][col] == "Passed") 
+        Logger.log("taskStatusValues[i][col] is " + taskStatusValues[i][col])
+
+        //Task object
+          taskObj.title = tasksValues[0][col]
+          taskObj.description = tasksValues[1][col]
+          taskObj.reference = taskUrlValue[0][col].getText()
+          taskObj.url = taskUrlValue[0][col].getLinkUrl()
+          taskObj.conatctPerson = tasksValues[3][col]
+          taskObj.priotiry = tasksValues[4][col]
+          taskObj.deadLine = Utilities.formatDate(tasksValues[5][col], "Europe/Athens", "dd/MM/yyyy")
+          taskObj.daysLeft = tasksValues[7][col]
+
+        //Critical Priority
+        if (!(taskStatusValues[i][col] === TASK_DONE) && taskObj.priotiry === TASK_PRIORITY_CRITICAL) 
         {
-          Logger.log(i + " i : " + StatusValues[i][col])
-          Logger.log("Send Reminder to: " + emailAddresses[i])
+          var sheetSections = ss.getSheetByName(SECTIONS_SHEET_NAME)
+          var sectionEmailsValues = sheetSections.getRange(EMAIL_RANGE).getValues().filter(n => n != "")
+          var sectionEmailAddresses = []
+          
+          for (var j = 0; j < sectionEmailsValues.length; j++)
+          {
+            sectionEmailAddresses.push(sectionEmailsValues[j][0])
+          }
 
-          //Task object
-          taskObj.title = TasksValues[0][col]
-          taskObj.description = TasksValues[1][col]
-          taskObj.reference = TaskUrlValue[0][col].getText()
-          taskObj.url = TaskUrlValue[0][col].getLinkUrl()
-          taskObj.conatctPerson = TasksValues[3][col]
-          taskObj.deadLine = Utilities.formatDate(TasksValues[4][col], "Europe/Athens", "dd/MM/yyyy")
-          taskObj.daysLeft = TasksValues[6][col]
-
+          Logger.log(i + " i : " + taskStatusValues[i][col])
+          Logger.log("Send Reminder to: " + sectionEmailAddresses[i])
           
           var message = `
           <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
+          <p><b>Priority: ❗ </b><b>${taskObj.priotiry}</b></p>
           <p>${taskObj.description}</p>
           <p><b>🔗 Reference: </b><a href="${taskObj.url}">${taskObj.reference}</a></p>
           <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
           <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
           <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
-          <p>Oh! you have completed this task? Mark it as 'Done ✅' in the <a href="https://docs.google.com/spreadsheets/d/1nFLMVpC7scBY-my7AsxxJSu07JDYrX78QdNqSpvhgNE/edit?usp=sharing">Dashboard</a> so we know 🙏</p>
+          <p>Oh! You have completed this task? Mark it as '${TASK_DONE}' in the <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so we know 🙏</p>
           `//message end
 
-          var SUBJECT = "🎗Reminder for Task in Dashboard for " + sheetName
-          var RECIPIENT = emailAddresses[i]
+          var subject = "🎗Reminder for Task in Dashboard for " + sheetName
+          var senderName = "⚠️ Dashboard Reminder ⚠️"
+          var recipient = sectionEmailAddresses[i]
 
           MailApp.sendEmail
           ({
-
-            to: RECIPIENT,
+            to: recipient,
             cc: "",
-            subject: SUBJECT,
+            subject: subject,
             htmlBody: message,
-            name: "Dashboard Reminder"
-
+            name: senderName
           })
 
-          //Test
-          /*
+        }
+        //High Priority
+        else if (taskObj.priotiry === TASK_PRIORITY_HIGH && taskObj.daysLeft >= 0 && (taskObj.daysLeft < 3 || taskObj.daysLeft === 7) && !(taskStatusValues[i][col] === TASK_DONE || taskStatusValues[i][col] === TASK_NOT_APPLICABLE))
+        {
+          Logger.log(i + " i : " + taskStatusValues[i][col])
+          Logger.log("Send Reminder to: " + emailAddresses[i])
+          
+          var message = `
+          <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
+          <p><b>Priority: </b><b>${taskObj.priotiry}</b></p>
+          <p>${taskObj.description}</p>
+          <p><b>🔗 Reference: </b><a href="${taskObj.url}">${taskObj.reference}</a></p>
+          <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
+          <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
+          <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
+          <p>Oh! You have completed this task? Mark it as '${TASK_DONE}' in the <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so we know 🙏</p>
+          `//message end
+
+          var subject = "🎗Reminder for Task in Dashboard for " + sheetName
+          var senderName = "⚠️ Dashboard Reminder ⚠️"
+          var recipient = emailAddresses[i]
+
           MailApp.sendEmail
           ({
-
-            to: "wpa+dashboardtest@esngreece.gr",
+            to: recipient,
             cc: "",
-            subject: SUBJECT,
+            subject: subject,
             htmlBody: message,
+            name: senderName
+          })
+        }
+        //else if (taskStatusValues[i][col] === TASK_DONE || taskStatusValues[i][col] === TASK_NOT_APPLICABLE) {} // || taskStatusValues[i][col] === TASK_STUCK
+        
+        //Medium priority
+        else if (taskObj.priotiry === TASK_PRIORITY_MEDIUM && taskObj.daysLeft >= 0 && taskObj.daysLeft < 2 && !(taskStatusValues[i][col] === TASK_DONE || taskStatusValues[i][col] === TASK_NOT_APPLICABLE))
+        {
+          Logger.log(i + " i : " + taskStatusValues[i][col])
+          Logger.log("Send Reminder to: " + emailAddresses[i])
+          
+          var message = `
+          <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
+          <p><b>Priority: </b><b>${taskObj.priotiry}</b></p>
+          <p>${taskObj.description}</p>
+          <p><b>🔗 Reference: </b><a href="${taskObj.url}">${taskObj.reference}</a></p>
+          <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
+          <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
+          <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
+          <p>Oh! You have completed this task? Mark it as '${TASK_DONE}' in the <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so we know 🙏</p>
+          `//message end
 
-          })*/
+          var subject = "🎗Reminder for Task in Dashboard for " + sheetName
+          var senderName = "⚠️ Dashboard Reminder ⚠️"
+          var recipient = emailAddresses[i]
+
+          MailApp.sendEmail
+          ({
+            to: recipient,
+            cc: "",
+            subject: subject,
+            htmlBody: message,
+            name: senderName
+          })
         }
       }
-    }
 
-    Logger.log("Going to next Column")
+      Logger.log("Going to next Column")
+    }
+    Logger.log("No task")
   }
-  Logger.log("No task")
-}
+  Logger.log("Exiting Sheet: " + sheetName)
 }

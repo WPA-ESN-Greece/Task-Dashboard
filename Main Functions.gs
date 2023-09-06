@@ -9,8 +9,8 @@
  */
 function onOpen()
 {
-  //if (checkGroupMembership() === true){initMenu()}
-  initMenu()
+  if (checkGroupMembership() === true){initMenu()}
+  //initMenu()
 }
 
 

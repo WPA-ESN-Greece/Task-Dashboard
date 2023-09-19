@@ -47,7 +47,7 @@ function dailyEmailReminder(sheetName)
     Logger.log("Column " + col ) 
 
 
-    if (tasksValues[0][col] == "" || tasksValues[4][col] === TASK_PRIORITY_LOW || tasksValues[4][col] == "") {}
+    if (tasksValues[0][col] == "" && tasksValues[4][col] === TASK_PRIORITY_LOW || tasksValues[4][col] == "") {}
     else
     {
       //Vertical Values
@@ -160,7 +160,7 @@ function dailyEmailReminder(sheetName)
 
           MailApp.sendEmail
           ({
-            to: "wpa+sections@esngreece.gr", //recipient,
+            to: recipient,
             cc: "",
             subject: subject,
             htmlBody: message,

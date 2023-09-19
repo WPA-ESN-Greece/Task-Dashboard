@@ -18,7 +18,7 @@ function dailyEmailReminder(sheetName)
   var sheet = ss.getSheetByName(sheetName)
 
   //Search for the "Completed Tasks" Colimn Index.
-    var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
+    var firstRowValues = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
     var passedTasksColumnIndex = findArrayIndexOfText(firstRowValues, PASSED_TASKS_COLUMN_HEADER)
 
   var taskLastColumn = passedTasksColumnIndex - 1 

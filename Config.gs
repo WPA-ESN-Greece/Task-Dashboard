@@ -65,7 +65,7 @@ var activeSheet = ss.getActiveSheet()
   const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
 
 //Google Group of accounts that can run sorting and create new tasks.
-const GOOGLE_GORUPS_PERMISSION = ["nationalboard@esngreece.gr", "nb-support@esngreece.gr"]
+const GOOGLE_GROUPS_PERMISSION = ["nationalboard@esngreece.gr", "nb-support@esngreece.gr"]
 
 //Sheets Names
 const SECTIONS_SHEET_NAME = "🏢 Sections"

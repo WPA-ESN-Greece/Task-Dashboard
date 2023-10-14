@@ -36,7 +36,7 @@ function checkGroupMembership()
    */
   let allMembers = []
   
-  GOOGLE_GORUPS_PERMISSION.forEach(
+  GOOGLE_GROUPS_PERMISSION.forEach(
     function getUsersFromGroup(groupEmail)
     {
       allMembersTemp = GroupsApp.getGroupByEmail(groupEmail).getUsers().forEach(member => allMembers.push(member))

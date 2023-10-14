@@ -7,9 +7,13 @@
  * You can customize the menu initialization process in the `initMenu` function.
  * 
  */
-function onOpen()
+function onOpenTrigggered()
 {
-  if (checkGroupMembership() === true){initMenu()}
+  if (checkGroupMembership() === true)
+  {
+    authPopUp()
+    initMenu()
+  }
   //initMenu()
 }
 
@@ -215,4 +219,24 @@ function showDocumentation()
     .setWidth(400).setHeight(60)
 
   SpreadsheetApp.getUi().showModalDialog(documentationMessage, title)
+}
+
+//Authentication Window
+function authPopUp()
+{
+  var ui = SpreadsheetApp.getUi()
+
+  var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL)
+  let authStatus = authInfo.getAuthorizationStatus()
+
+  Logger.log("authStatus " + authStatus)
+
+  if (authStatus === ScriptApp.AuthorizationStatus.REQUIRED)
+  {
+    var authUrl = authInfo.getAuthorizationUrl()
+    
+    var message = HtmlService.createHtmlOutput(`<p style="font-family: 'Open Sans'">Authenticate your script.<a href="${authUrl}" target="_blank">here</a></p>`).setWidth(400).setHeight(60)
+    ui.showModalDialog(message,"Authentication")
+
+  }
 }

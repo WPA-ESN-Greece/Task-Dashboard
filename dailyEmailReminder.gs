@@ -25,6 +25,13 @@ function dailyEmailReminder(sheetName)
 
   var columnRange = taskLastColumn - Task_Start_Column + 1
 
+  // Checks if there are no tasks in current sheet and if there're not, it ends the function.
+  if (columnRange == Task_Start_Column) 
+  {
+    Logger.log("No tasks in this sheet. Exiting Sheet: " + sheetName)
+    return
+  }
+
   var tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, columnRange)
 
   var tasksValues = tasksRange.getValues()
@@ -47,7 +54,7 @@ function dailyEmailReminder(sheetName)
     Logger.log("Column " + col ) 
 
 
-    if (tasksValues[0][col] == "" && tasksValues[4][col] === TASK_PRIORITY_LOW || tasksValues[4][col] == "") {}
+    if (tasksValues[0][col] == "" && tasksValues[4][col] === TASK_PRIORITY_LOW || tasksValues[4][col] == "" || tasksValues[5][col] == "") {}
     else
     {
       //Vertical Values

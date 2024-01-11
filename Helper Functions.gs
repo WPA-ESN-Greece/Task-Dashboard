@@ -88,7 +88,8 @@ function richTextLink(text,url)
  * @param {*} element - The element to be checked for emptiness.
  * @returns {boolean} Returns true if the element is not empty, false otherwise.
  */
-function filterEmpty(element){
+function filterEmpty(element)
+{
  return element !== null && element !== undefined && element !== '' && element !== ' ' && !Number.isNaN(element) 
 }
 
@@ -191,7 +192,7 @@ function getSheetURL(sheetName)
     // Construct the URL for the specific sheet
     var sheetUrl = "https://docs.google.com/spreadsheets/d/" + spreadsheetId + "/edit#gid=" + sheetId
     
-    Logger.log("sheetUrl " + sheetUrl)
+    //Logger.log("sheetUrl " + sheetUrl) 
     
     return sheetUrl
   } 
@@ -200,4 +201,12 @@ function getSheetURL(sheetName)
     // If the sheet doesn't exist, return an error message
     return "Sheet not found"
   }
+}
+
+
+// Function to select a column from the matrix without a loop
+function getMatrixColumn(matrix, columnIndex) {
+    return matrix.map(function(row) {
+        return row[columnIndex];
+    });
 }

@@ -18,7 +18,7 @@ function dailyEmailReminder(sheetName)
   var sheet = ss.getSheetByName(sheetName)
 
   //Search for the "Completed Tasks" Colimn Index.
-    var firstRowValues = activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0]
+    var firstRowValues = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
     var passedTasksColumnIndex = findArrayIndexOfText(firstRowValues, PASSED_TASKS_COLUMN_HEADER)
 
   var taskLastColumn = passedTasksColumnIndex - 1 
@@ -38,8 +38,8 @@ function dailyEmailReminder(sheetName)
   {
     emailAddresses.push(emailsValues[i][0])
   }
-  //var taskStatusLastRange = activeSheet.getRange(Task_Status_Start_Row, Task_Status_Last_Row, Task_Status_Row_Range, 1)
-  var taskStatusAssinees = activeSheet.getRange(Task_Status_Start_Row, 3, Task_Status_Row_Range, 1).getValues()
+
+  var taskStatusAssinees = sheet.getRange(Task_Status_Start_Row, 3, Task_Status_Row_Range, 1).getValues()
   var emptyAssignees = taskStatusAssinees.filter(elemnet => elemnet[0] == "").length
   var taskStatusRowRange = taskStatusAssinees.length - emptyAssignees
   var taskStatusValues = sheet.getRange(Task_Status_Start_Row, Task_Start_Column, taskStatusRowRange, columnRange).getValues()
@@ -54,7 +54,7 @@ function dailyEmailReminder(sheetName)
     else
     {
       //Vertical Values
-      for (var i = 0; i < taskStatusRowRange; i++) // for (var i = 0; i < Task_Row_Range; i++)
+      for (var i = 0; i < taskStatusRowRange; i++)
       {
         Logger.log("taskStatusValues[i][col] is " + taskStatusValues[i][col])
 

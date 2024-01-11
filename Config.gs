@@ -6,42 +6,46 @@ const DOCUMENTATION_LINK = "https://docs.google.com/document/d/1NnX-ycDSOnuJCTnV
 //Dashboard Link
 const DASHBOARD_URL = SpreadsheetApp.getActiveSpreadsheet().getUrl()
 
-//Systeam Global Variables
-var ss = SpreadsheetApp.getActiveSpreadsheet() 
-//var ui = SpreadsheetApp.getUi()
-var activeSheet = ss.getActiveSheet()
+//System Global Variables
+let ss = SpreadsheetApp.getActiveSpreadsheet() 
+let activeSheet = ss.getActiveSheet()
+
 
 //Task Object
-  var taskObj =
+  let taskObj =
   {
     title: "",
     description: "",
     reference: "",
-    url: "",
+    referenceURL: "",
     conatctPerson: "",
     priotiry: "",
     deadLine: "",
     daysLeft: ""
   }
 
-//Tasks Range
-  const Task_Start_Row = 2 //Row 2
-  const Task_Start_Column = 5 //Column E 
-  const Task_Last_Row = 10 //Row 10
-  const Task_Row_Range = Task_Last_Row - Task_Start_Row + 1
-
-//Task Details Rows
-  const Task_Priorities = Task_Start_Row + 4
-  const Task_Deadlines = Task_Start_Row + 5
-  const Task_Proof = Task_Start_Row + 8
+// Timezone
+  let TIMEZONE = Session.getScriptTimeZone()
 
 //Task Status Range 
-  const Task_Status_Start_Row = 12 //Row 12
-  const Task_Status_Last_Row = 21 //Row 21
-  const Task_Status_Row_Range = Task_Status_Last_Row - Task_Status_Start_Row + 1
+  let Task_Status_Start_Row = findArrayIndexOfText(getMatrixColumn(activeSheet.getRange("B:B").getValues(), 0), "-start") +1
+  let Task_Status_Last_Row = findArrayIndexOfText(getMatrixColumn(activeSheet.getRange("B:B").getValues(), 0), "-end") -1
+  let Task_Status_Row_Range = Task_Status_Last_Row - Task_Status_Start_Row + 1
+
+//Tasks Range
+  const Task_Start_Row = 2 // Row 2
+  const Task_Start_Column = 5 // Column E 
+  let Task_Last_Row = Task_Status_Start_Row -1
+  let Task_Row_Range = Task_Last_Row - Task_Start_Row
+
+//Task Details Rows
+  const Task_Priorities = Task_Start_Row +4
+  const Task_Deadlines = Task_Start_Row +5
+  const Task_Proof = Task_Start_Row +8
+
 
 //Email List on each sheet
-  const EMAIL_RANGE = "B12:B21"
+  let EMAIL_RANGE = `B${Task_Status_Start_Row}:B${Task_Status_Last_Row}`
 
 //Task Statuses Values
   const TASK_DONE = "Done ✅"
@@ -63,6 +67,7 @@ var activeSheet = ss.getActiveSheet()
 //Days Left Values
   const PASSED = "Passed"
   const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
+  let PassedTasksColumnIndex = findArrayIndexOfText(activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0], PASSED_TASKS_COLUMN_HEADER)
 
 
 //Sheets Names

@@ -12,9 +12,9 @@
  */
 function initMenu() 
 {
-  var ui = SpreadsheetApp.getUi()
+  let ui = SpreadsheetApp.getUi()
   
-  var menu = ui.createMenu("🌌 ESN Menu")
+  let menu = ui.createMenu("🌌 ESN Menu")
   
   menu.addItem("➕ Add New Task", "addNewTask")
   menu.addItem("🧙‍♂️ Sort Current Tasksheet", "sortTasks")

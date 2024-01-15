@@ -9,8 +9,8 @@
  */
 function onOpen()
 {
-  if (checkGroupMembership() === true){initMenu()}
-  //initMenu()
+  //if (checkGroupMembership() === true){initMenu()}
+  initMenu()
 }
 
 
@@ -27,6 +27,22 @@ function onOpen()
  * */
 function onEdit()
 {
+  let sheetsNames = forEachEmail()
+  
+  for (var i = 0; i < sheetsNames.length; i++)
+  {
+    try
+    {
+      emailNewTaskNotification(sheetsNames[i])
+    }
+    catch (error)
+    {
+      Logger.log('An error occurred: ' + error.message);
+      throw error; // Re-throwing the error
+    }
+  }
+
+  /*
   //Sections
   newTaskEmailTo(SECTIONS_SHEET_NAME, SECTIONS_EMAIL)
 
@@ -50,6 +66,7 @@ function onEdit()
 
   //🤝 ParMans
   newTaskEmailTo(PARTNERSHIPS_MANAGERS_SHEET_NAME, PARTNERSHIPS_MANAGERS_EMAIL)
+  */
 }
 
 
@@ -215,4 +232,25 @@ function showDocumentation()
     .setWidth(400).setHeight(60)
 
   SpreadsheetApp.getUi().showModalDialog(documentationMessage, title)
+}
+
+
+//Authentication Window
+function authPopUp()
+{
+  var ui = SpreadsheetApp.getUi()
+
+  var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL)
+  let authStatus = authInfo.getAuthorizationStatus()
+
+  Logger.log("authStatus " + authStatus)
+
+  if (authStatus === ScriptApp.AuthorizationStatus.REQUIRED)
+  {
+    var authUrl = authInfo.getAuthorizationUrl()
+    
+    var message = HtmlService.createHtmlOutput(`<p style="font-family: 'Open Sans'">Authenticate your script.<a href="${authUrl}" target="_blank">here</a></p>`).setWidth(400).setHeight(60)
+    ui.showModalDialog(message,"Authentication")
+
+  }
 }

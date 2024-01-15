@@ -6,6 +6,7 @@ function myFunction()
 
   Logger.log(EMAIL_RANGE)
   Logger.log(Task_Status_Row_Range)
+  ss.getSheetByName('').getType()
 
   //Logger.log(findArrayIndexOfText(outPut, "-start"))
   Logger.log(TIMEZONE)

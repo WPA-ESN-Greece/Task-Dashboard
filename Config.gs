@@ -8,7 +8,7 @@ const DASHBOARD_URL = SpreadsheetApp.getActiveSpreadsheet().getUrl()
 
 //System Global Variables
 let ss = SpreadsheetApp.getActiveSpreadsheet() 
-let activeSheet = ss.getActiveSheet()
+//let activeSheet = ss.getActiveSheet()
 
 
 //Task Object
@@ -27,9 +27,25 @@ let activeSheet = ss.getActiveSheet()
 // Timezone
   let TIMEZONE = Session.getScriptTimeZone()
 
+function CurrentSheetData(sheetName)
+{
+  let currentSheet = ss.getSheetByName(sheetName)
+
+  Task_Status_Start_Row = findArrayIndexOfText(getMatrixColumn(currentSheet.getRange("B:B").getValues(), 0), "-start") +1
+  Task_Status_Last_Row = findArrayIndexOfText(getMatrixColumn(currentSheet.getRange("B:B").getValues(), 0), "-end") -1
+  Task_Status_Row_Range = Task_Status_Last_Row - Task_Status_Start_Row + 1
+  PassedTasksColumnIndex = findArrayIndexOfText(currentSheet.getRange(1, 1, 1, currentSheet.getLastColumn()).getValues()[0], PASSED_TASKS_COLUMN_HEADER)
+
+  return {  task_Status_Start_Row: Task_Status_Start_Row,
+            task_Status_Last_Row: Task_Status_Last_Row,
+            task_Status_Row_Range: Task_Status_Row_Range,
+            passedTasksColumnIndex: PassedTasksColumnIndex,
+          }
+}
+
 //Task Status Range 
-  let Task_Status_Start_Row = findArrayIndexOfText(getMatrixColumn(activeSheet.getRange("B:B").getValues(), 0), "-start") +1
-  let Task_Status_Last_Row = findArrayIndexOfText(getMatrixColumn(activeSheet.getRange("B:B").getValues(), 0), "-end") -1
+  let Task_Status_Start_Row = 12 // Default value
+  let Task_Status_Last_Row = 21 // Default value
   let Task_Status_Row_Range = Task_Status_Last_Row - Task_Status_Start_Row + 1
 
 //Tasks Range
@@ -49,6 +65,7 @@ let activeSheet = ss.getActiveSheet()
 
 //Task Statuses Values
   const TASK_DONE = "Done ✅"
+  const TASK_STARTED = "Started 🔰"
   const TASK_NOT_APPLICABLE = "Not Applicable"
   const TASK_IN_PROGRESS = "Working on it 🚧"
   const TASK_STUCK = "Stuck 🛑"
@@ -61,13 +78,13 @@ let activeSheet = ss.getActiveSheet()
 
 //Notification Status options
   const NO_EMAIL = "No Email"
-  const READY_TO_EMAIL = "Ready to Email"
+  const READY_TO_EMAIL = "Ready to Email 📫"
   const EMAIL_SENT = "Email Sent"
 
 //Days Left Values
   const PASSED = "Passed"
   const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
-  let PassedTasksColumnIndex = findArrayIndexOfText(activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0], PASSED_TASKS_COLUMN_HEADER)
+  let PassedTasksColumnIndex = 8 // Default value    //findArrayIndexOfText(activeSheet.getRange(1, 1, 1, activeSheet.getLastColumn()).getValues()[0], PASSED_TASKS_COLUMN_HEADER)
 
 
 //Sheets Names
@@ -81,17 +98,11 @@ const PROJECT_MANAGERS_SHEET_NAME = "🌟PM"
 const PARTNERSHIPS_MANAGERS_SHEET_NAME = "🤝 ParMan"
 
 //Communities emails
-const LB_EMAIL = ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B1').getValue()
-const SECTIONS_EMAIL = ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B11').getValue()
-const PRESIDENTS_EMAIL = ss.getSheetByName(PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
-const VICE_PRESIDENTS_EMAIL = ss.getSheetByName(VICE_PRESIDENTS_SHEET_NAME).getRange('B11').getValue()
-const TREASURERS_EMAIL = ss.getSheetByName(TREASURERS_SHEET_NAME).getRange('B11').getValue()
-const CMS_EMAIL = ss.getSheetByName(CMS_SHEET_NAME).getRange('B11').getValue()
-const WPAS_EMAIL = ss.getSheetByName(WPAS_SHEET_NAME).getRange('B11').getValue()
-const PROJECT_MANAGERS_EMAIL = ss.getSheetByName(PROJECT_MANAGERS_SHEET_NAME).getRange('B11').getValue()
-const PARTNERSHIPS_MANAGERS_EMAIL = ss.getSheetByName(PARTNERSHIPS_MANAGERS_SHEET_NAME).getRange('B11').getValue()
+//const LB_EMAIL = ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B1').getValue()
+//const SECTIONS_EMAIL = ss.getSheetByName(SECTIONS_SHEET_NAME).getRange('B11').getValue()
+
 
 
 //Google Group of accounts that can run sorting and create new tasks.
-const GOOGLE_GROUPS_PERMISSION = [LB_EMAIL] 
+//const GOOGLE_GROUPS_PERMISSION = [LB_EMAIL] 
 // Examle ["localboard@mykonos@esngreece.gr", "localboard-supporters@mykonos@esngreece.gr"]

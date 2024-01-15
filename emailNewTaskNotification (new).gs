@@ -18,92 +18,55 @@
  */
 function emailNewTaskNotification(sheetName)
 {
-  Logger.log(`Currently on ${sheetName} sheet.`)
+  //var sheetName = "President" // for testing
+
+  Logger.log(`--- Currently on ${sheetName} sheet. ---`)
 
   // Gets a specific sheet on a given name.
   let sheet = ss.getSheetByName(sheetName)
-  //sheet.activate()
-
   // Gets a matrix of the tasks details until the completed tasks column.
   let tasksDetails = getTasksDetails(sheetName) 
-    //Logger.log("tasksDetails: ")
-    //Logger.log(tasksDetails)
-
   // Gets a matrix of the tasks statuses until the completed tasks column.
   let tasksStatuses = getTasksStatuses(sheetName) 
-    //Logger.log("tasksStatuses: ")
-    //Logger.log(tasksStatuses)
-
   // Gets an array of email addresses of the active sheet's assignees.
   let assigneesEmails =  getMatrixColumn(sheet.getRange(EMAIL_RANGE).getValues(), 0)
-    //Logger.log("assigneesEmails: ")
-    //Logger.log(assigneesEmails)
 
   // This for loop goes through every task column until the completed tasks one. The i marks the column's index. 
-  for (var i = 0; i <= tasksDetails[0].length; i++)
+  for (var i = 0; i < tasksDetails[0].length; i++)
   {
     Logger.log("i = " + i)
 
     // An array that checks if ALL the required task details are NOT empty. Returns true or false. Required fields are the ones with the red asterisk * in the Spreadsheet.
     let taskValuesRequirementsArrayIsTrue = [tasksDetails[0][i], tasksDetails[3][i], tasksDetails[4][i], tasksDetails[5][i], tasksDetails[6][i]].every(element => element != "")
     
-    switch (tasksDetails[6][i] === READY_TO_EMAIL)
-    {
-      case true:
-        if (taskValuesRequirementsArrayIsTrue === true)
-        {
-          // Task Javascript Object that maps the tasksDetails matrix values to more human-readable variables. 
-            taskObj.title = tasksDetails[0][i]
-            taskObj.description = tasksDetails[1][i]
-            taskObj.reference = tasksDetails[2][i]
-            taskObj.referenceURL = tasksDetails[9][i]
-            taskObj.conatctPerson = tasksDetails[3][i]
-            taskObj.priotiry = tasksDetails[4][i]
-            taskObj.deadLine = Utilities.formatDate(tasksDetails[5][i], TIMEZONE, "dd/MM/yyyy")
-            taskObj.daysLeft = tasksDetails[7][i]
+    // Checks if the current task's notification status is "Redy to email". If not, skip it. 
+    if (!(tasksDetails[6][i] === READY_TO_EMAIL)) {continue;}
+    // Checks if the current task meets the prerequisites. If not, skip it. 
+    if (taskValuesRequirementsArrayIsTrue === false) {continue;}
+    
+    // Task Javascript Object that maps the tasksDetails matrix values to more human-readable variables. 
+      taskObj.title = tasksDetails[0][i]
+      taskObj.description = tasksDetails[1][i]
+      taskObj.reference = tasksDetails[2][i]
+      taskObj.referenceURL = tasksDetails[9][i]
+      taskObj.conatctPerson = tasksDetails[3][i]
+      taskObj.priotiry = tasksDetails[4][i]
+      taskObj.deadLine = Utilities.formatDate(tasksDetails[5][i], TIMEZONE, "dd/MM/yyyy")
+      taskObj.daysLeft = tasksDetails[7][i]
+    //
 
-          // Gets an array of assignees' email addresses that the current task is neither 'Not Applicable' nor 'Done'.
-          let bccRecipients = checkRecipientsEmail(tasksStatuses, i, assigneesEmails)
+    // Gets an array of assignees' email addresses that the current task is neither 'Not Applicable' nor 'Done'.
+    let bccRecipients = checkRecipientsEmail(tasksStatuses, i, assigneesEmails)
 
-          // New Task Email Notification Variables
-          let newTaskMessage = `
-          <p><b>🔔 To-Do: </b><b>${taskObj.title}</b></p>
-          <p><b>Priority: </b><b>${taskObj.priotiry}</b></p>
-          <p>${taskObj.description}</p>
-          <p><b>🔗 Reference: </b><a href="${taskObj.referenceURL}">${taskObj.reference}</a></p>
-          <p><b>👤 Contact Person: </b>${taskObj.conatctPerson}</p>
-          <p><b>🆘 Deadline: </b>${taskObj.deadLine}</p>
-          <p><b>🔴 Days Left: </b>${taskObj.daysLeft}</p>
-          <p>Check it out 👉 <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so you can add it to your To-Do ✨</p>
-          `//message end
-          
-          Logger.log(`Goingi to email this task: ${taskObj.title}`)
-          Logger.log(`Sending email as bcc to ${bccRecipients} ...`)
+    emailTask(taskObj, bccRecipients.join(), sheetName, "newTask")
 
-          MailApp.sendEmail
-            ({
-              to: "",
-              cc: "",
-              bcc: bccRecipients.join(),
-              subject: `New Task reported in Dashboard for ${sheetName}`,
-              htmlBody: newTaskMessage,
-              name: "⚠️ Dashboard New Task ⚠️"
-            })
+    // Updates Notification Status Value from "Email Ready" to "Email Sent".
+    let notificationStatusValueCELL_RangeA1 = sheet.getRange(Task_Start_Row + 6, Task_Start_Column + i).getA1Notation()
+    sheet.getRange(notificationStatusValueCELL_RangeA1.toString()).setValue(EMAIL_SENT)
 
-            // Updates Notification Status Value from "Email Ready" to "Email Sent".
-            let notificationStatusValueCELL_RangeA1 = sheet.getRange(Task_Start_Row + 6, Task_Start_Column + i).getA1Notation()
-            sheet.getRange(notificationStatusValueCELL_RangeA1.toString()).setValue(EMAIL_SENT)
-            Logger.log(`Cell ${notificationStatusValueCELL_RangeA1} value was set to ${EMAIL_SENT}.`)
-        }
-      break;
-
-      default:
-        Logger.log("Nothing to email.")
-    }
-
+    Logger.log(`Cell ${notificationStatusValueCELL_RangeA1} value was set to ${EMAIL_SENT}.`)
   }
-
-  Logger.log(`Leaving ${sheetName} sheet.`)
+  Logger.log(`--- Leaving ${sheetName} sheet. ---`)
 }
 
 
@@ -122,19 +85,15 @@ function emailNewTaskNotification(sheetName)
  */
 function checkRecipientsEmail(taskStatusesValues, taskColumnIndex, recipientsEmails)
 {
-
   let finalRecipientsEmails = []
   let taskStatusesValuesArray = getMatrixColumn(taskStatusesValues, taskColumnIndex)
-  Logger.log(taskStatusesValuesArray)
-  
+
   for (var j = 0; j < recipientsEmails.length; j++)
   {
-
     if (!(taskStatusesValuesArray[j] == TASK_NOT_APPLICABLE || taskStatusesValuesArray[j] == TASK_DONE) && recipientsEmails[j])
     {
       finalRecipientsEmails.push(recipientsEmails[j])
     }
-      
   }
   Logger.log("finalRecipientsEmails FINAL: ")
   Logger.log(finalRecipientsEmails)

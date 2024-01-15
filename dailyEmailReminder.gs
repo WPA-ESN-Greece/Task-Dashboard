@@ -12,7 +12,7 @@
  * @param {string} sheetName - The name of the sheet containing the tasks to send reminders for.
  * @returns {void} This function does not return a value.
  */
-function dailyEmailReminder(sheetName)
+function dailyEmailReminder1(sheetName)
 {
   Logger.log("Sheet: " + sheetName)
   var sheet = ss.getSheetByName(sheetName)

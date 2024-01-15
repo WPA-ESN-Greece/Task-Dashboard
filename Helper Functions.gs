@@ -210,3 +210,76 @@ function getMatrixColumn(matrix, columnIndex) {
         return row[columnIndex];
     });
 }
+
+
+function getAllSheetsNames() 
+{
+  let allSheets = ss.getSheets()
+
+  // Removes the "Settings" sheet.
+  allSheets.pop()
+
+  // Gets the names of the sheets in an Array.
+  let sheetNamesArray = []
+  allSheets.forEach(sheet => sheetNamesArray.push(sheet.getName()))
+
+  // Returns an Array of All the Sheets' Names withouth the Settings sheet.
+  return sheetNamesArray
+}
+
+
+function emailTask(taskObject, recipientEmail, sheetName, emailNotificationType, taskStatus = "")
+{
+  let emailBody, subject, senderName = ""
+  let bccEmails, recipientEmails
+  
+  switch (emailNotificationType)
+  {
+    case "newTask":
+      recipientEmails = ""
+      bccEmails = recipientEmail
+      subject = `New Task reported in Dashboard for ${sheetName}`
+      senderName = "⚠️ Dashboard New Task ⚠️"
+      emailBody = `
+      <p><b>🔔 To-Do: </b><b>${taskObject.title}</b></p>
+      <p><b>❗ Priority: </b><b>${taskObject.priotiry}</b></p>
+      <p>${taskObject.description}</p>
+      <p><b>🔗 Reference: </b><a href="${taskObject.url}">${taskObject.reference}</a></p>
+      <p><b>👤 Contact Person: </b>${taskObject.conatctPerson}</p>
+      <p><b>🆘 Deadline: </b>${taskObject.deadLine}</p>
+      <p><b>🔴 Days Left: </b>${taskObject.daysLeft}</p>
+      <p>Check it out 👉 <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so you can add it to your To-Do ✨</p>
+      `//emailBody end
+    break;
+
+    case "reminder":
+      recipientEmails = recipientEmail
+      bccEmails = ""
+      subject = `🎗Reminder for Task in Dashboard for ${sheetName}`
+      senderName = "⚠️ Dashboard Reminder ⚠️"
+      emailBody = `
+      <p><b>🔔 To-Do: </b><b>${taskObject.title}</b> - Your current status: ${taskStatus}</p>
+      <p><b>❗ Priority: </b><b>${taskObject.priotiry}</b></p>
+      <p>${taskObject.description}</p>
+      <p><b>🔗 Reference: </b><a href="${taskObject.url}">${taskObject.reference}</a></p>
+      <p><b>👤 Contact Person: </b>${taskObject.conatctPerson}</p>
+      <p><b>🆘 Deadline: </b>${taskObject.deadLine}</p>
+      <p><b>🔴 Days Left: </b>${taskObject.daysLeft}</p>
+      <p>Oh! You have completed this task? Mark it as '${TASK_DONE}' in the <a href="${getSheetURL(sheetName)}">Dashboard/ ${sheetName}</a> so we know 🙏</p>
+      `//emailBody end
+    break;
+
+    default:
+      Logger.log("The only valid email types are 'newTask' and 'reminder'.")
+  }
+  
+  MailApp.sendEmail
+  ({
+    to: recipientEmail,
+    cc: "",
+    bcc: bccEmails,
+    subject: subject,
+    htmlBody: emailBody,
+    name: senderName
+  })
+}

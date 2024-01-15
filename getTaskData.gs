@@ -27,6 +27,6 @@ function getTasksStatuses(sheetName)
 
   let tasksStatusValues = tasksStatusRange.getValues()
 
-  Logger.log(tasksStatusValues)
+  //Logger.log(tasksStatusValues)
   return tasksStatusValues
 }

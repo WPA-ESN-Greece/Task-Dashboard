@@ -27,7 +27,7 @@ function onOpen()
  * */
 function onEdit()
 {
-  let sheetsNames = forEachEmail()
+  let sheetsNames = getAllSheetsNames()
   
   for (var i = 0; i < sheetsNames.length; i++)
   {
@@ -37,36 +37,10 @@ function onEdit()
     }
     catch (error)
     {
-      Logger.log('An error occurred: ' + error.message);
-      throw error; // Re-throwing the error
+      Logger.log('An error occurred: ' + error)
     }
   }
 
-  /*
-  //Sections
-  newTaskEmailTo(SECTIONS_SHEET_NAME, SECTIONS_EMAIL)
-
-  //👩‍💼 Presidents
-  newTaskEmailTo(PRESIDENTS_SHEET_NAME, PRESIDENTS_EMAIL)
-
-  //🙌 VPs
-  newTaskEmailTo(VICE_PRESIDENTS_SHEET_NAME, VICE_PRESIDENTS_EMAIL)
-
-  //💸Treasurers
-  newTaskEmailTo(TREASURERS_SHEET_NAME, TREASURERS_EMAIL)
-
-  //🎨CMs
-  newTaskEmailTo(CMS_SHEET_NAME, CMS_EMAIL)
-
-  //💻WPAs
-  newTaskEmailTo(WPAS_SHEET_NAME, WPAS_EMAIL)
-
-  //🌟PMs
-  newTaskEmailTo(PROJECT_MANAGERS_SHEET_NAME, PROJECT_MANAGERS_EMAIL)
-
-  //🤝 ParMans
-  newTaskEmailTo(PARTNERSHIPS_MANAGERS_SHEET_NAME, PARTNERSHIPS_MANAGERS_EMAIL)
-  */
 }
 
 

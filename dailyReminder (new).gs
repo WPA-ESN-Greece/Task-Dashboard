@@ -7,13 +7,12 @@
  * and sends reminders accordingly. It also includes task details and links to the task sheet.
  *
  * @function
- * 
+ * @name dailyEmailReminder
  * @memberof module:Spreadsheet
  * @param {string} sheetName - The name of the sheet containing the tasks to send reminders for.
  * @returns {void} This function does not return a value.
  */
-//@name dailyEmailReminder
-function dailyReminder22(sheetName)
+function dailyEmailReminder(sheetName)
 {
   //var sheetName = "President" // for testing
   
@@ -51,7 +50,7 @@ function dailyReminder22(sheetName)
       taskObj.deadLine = Utilities.formatDate(tasksDetails[5][i], TIMEZONE, "dd/MM/yyyy")
       taskObj.daysLeft = tasksDetails[7][i]
     //
-    
+
     // Checks if the current task has any days left until its deadline. If not (the deadline is passed), skip it. 
     if (taskObj.daysLeft === PASSED) {continue;}
 

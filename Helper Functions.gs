@@ -1,6 +1,32 @@
+function getTasksDetails(sheetName)
+{
+  let sheet = ss.getSheetByName(sheetName)
+  
+  let taskColumnRange = CurrentSheetData(sheetName).passedTasksColumnIndex - Task_Start_Column
+  let tasksRange = sheet.getRange(Task_Start_Row, Task_Start_Column, Task_Row_Range, taskColumnRange)
+
+  let tasksValues = tasksRange.getValues()
+  let taskUrlValues = sheet.getRange(4, Task_Start_Column, 1, taskColumnRange).getRichTextValues()[0].map(element => {if (element.getLinkUrl() == null){return ""} else {return element.getLinkUrl()}})
+  
+  return tasksValues.concat([taskUrlValues])
+}
+
+
+function getTasksStatuses(sheetName)
+{
+  let sheet = ss.getSheetByName(sheetName)
+
+  let tasksStatusColumnRange = CurrentSheetData(sheetName).passedTasksColumnIndex - Task_Start_Column
+  let tasksStatusRange = sheet.getRange( CurrentSheetData(sheetName).task_Status_Start_Row, Task_Start_Column, CurrentSheetData(sheetName).task_Status_Row_Range, tasksStatusColumnRange)
+
+  let tasksStatusValues = tasksStatusRange.getValues()
+
+  return tasksStatusValues
+}
+
 /**
  * This function inserts a new column after the fourth column (D) in the active sheet,
- * effectively shifting the existing columns to the right.
+ * effectively shifting the existing columns to the right. Task_Start_Column default value is 5 for column E. 
  *
  * @function
  * @name newTaskColumn
@@ -8,7 +34,7 @@
  */
 function newTaskColumn()
 {
-  activeSheet.insertColumnAfter(4)
+  activeSheet.insertColumnAfter(Task_Start_Column -1)
 }
 
 
@@ -20,44 +46,27 @@ function newTaskColumn()
  * email is in the list of group members.
  *
  * @function
- * @name checkGroupMembership
- * @memberof module:Authorization
+ * @name isCurrentUserAdmin
  * @returns {boolean} Returns true if the user is a member of any of the specified groups, false otherwise.
  */
-function checkGroupMembership() 
+function isCurrentUserAdmin()
 {
-  /**
-   * @type {string} userEmail - The email address of the currently logged-in user.
-   */
-  var userEmail = Session.getActiveUser().getEmail();
-  
-  /**
-   * @type {Array<string>} allMembers - An array to store all group members' email addresses.
-   */
-  let allMembers = []
-  
-  GOOGLE_GROUPS_PERMISSION.forEach(
-    function getUsersFromGroup(groupEmail)
-    {
-      allMembersTemp = GroupsApp.getGroupByEmail(groupEmail).getUsers().forEach(member => allMembers.push(member))
-    }
-  )
+  let usersEmailAddresses = ss.getEditors().map(function(element) {return getGroupMembers(element)}).join()
+  let userEmail = Session.getActiveUser().getEmail()
 
-  allMembers = allMembers.join()
+  Logger.log(`Is User ${userEmail} editor: ${usersEmailAddresses.includes(userEmail)}`)
+  return usersEmailAddresses.includes(userEmail)
+}
 
-  Logger.log("All Members: " + allMembers)
-  
-  var isMember = allMembers.includes(userEmail)
+function getGroupMembers(emailAddress)
+{
+  try 
+  {
+    let groupMembers = GroupsApp.getGroupByEmail(emailAddress).getUsers()
+    return groupMembers.join()
+  } catch(error){}
 
-  Logger.log(isMember + " isMember")
-  
-  if (isMember) {
-    Logger.log(userEmail + " is a member of the group.");
-    return true
-  } else {
-    Logger.log(userEmail + " is not a member of the group.");
-    return false
-  }
+  return emailAddress
 }
 
 
@@ -134,7 +143,7 @@ function toast(message, tittle, timeoutSeconds)
   ss.toast(message, tittle, timeoutSeconds)
 }
 
-//Confirmation Alert
+
 /**
  * Displays a custom alert dialog box in Google Apps Script.
  *
@@ -205,10 +214,12 @@ function getSheetURL(sheetName)
 
 
 // Function to select a column from the matrix without a loop
-function getMatrixColumn(matrix, columnIndex) {
-    return matrix.map(function(row) {
-        return row[columnIndex];
-    });
+function getMatrixColumn(matrix, columnIndex) 
+{
+  return matrix.map(function(row) 
+  {
+    return row[columnIndex]
+  })
 }
 
 
@@ -216,7 +227,8 @@ function getAllSheetsNames()
 {
   let allSheets = ss.getSheets()
 
-  // Removes the "Settings" sheet.
+  // Removes the "Settings" and the "Template" sheets. 
+  allSheets.pop()
   allSheets.pop()
 
   // Gets the names of the sheets in an Array.

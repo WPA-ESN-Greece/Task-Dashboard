@@ -9,8 +9,8 @@
  */
 function onOpen()
 {
-  //if (checkGroupMembership() === true){initMenu()}
-  initMenu()
+  if (isCurrentUserAdmin() === true){initMenu()}
+  //initMenu()
 }
 
 
@@ -40,7 +40,6 @@ function onEdit()
       Logger.log('An error occurred: ' + error)
     }
   }
-
 }
 
 
@@ -57,29 +56,19 @@ function onEdit()
  */
 function dailyDeadlineCheck()
 {
-  //Sections
-  dailyEmailReminder(SECTIONS_SHEET_NAME)
-
-  //👩‍💼 Presidents
-  dailyEmailReminder(PRESIDENTS_SHEET_NAME)
-
-  //🙌 VPs
-  dailyEmailReminder(VICE_PRESIDENTS_SHEET_NAME)
-
-  //💸Treasurers
-  dailyEmailReminder(TREASURERS_SHEET_NAME)
-
-  //🎨CMs
-  dailyEmailReminder(CMS_SHEET_NAME)
-
-  //💻WPAs
-  dailyEmailReminder(WPAS_SHEET_NAME)
-
-  //🌟PMs
-  dailyEmailReminder(PROJECT_MANAGERS_SHEET_NAME)
-
-  //🤝 ParMans
-  dailyEmailReminder(PARTNERSHIPS_MANAGERS_SHEET_NAME)
+  let sheetsNames = getAllSheetsNames()
+  
+  for (var i = 0; i < sheetsNames.length; i++)
+  {
+    try
+    {
+      dailyEmailReminder(sheetsNames[i])
+    }
+    catch (error)
+    {
+      Logger.log('An error occurred: ' + error)
+    }
+  }
 }
 
 
@@ -100,7 +89,9 @@ function addNewTask()
 {
   var ui = SpreadsheetApp.getUi()
 
-  if (checkGroupMembership() === true && showAlert(
+  newTaskColumn()
+/*
+  if ( showAlert(
     "➕ Add New Task",`You are about to insert a new task column to the left of Column E on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,
     ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
@@ -108,6 +99,7 @@ function addNewTask()
     newTaskColumn()
   }
   else {return}
+  */
 }
 
 
@@ -129,7 +121,7 @@ function sortTasks()
 {
   var ui = SpreadsheetApp.getUi()
 
-  if (checkGroupMembership() === true && showAlert(
+  if (isCurrentUserAdmin() === true && showAlert(
     "🧙‍♂️ Sort Current Tasksheet",`You are about to sort the task colums on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,
     ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
@@ -162,7 +154,7 @@ function archiveCompletedTasks()
 {
   var ui = SpreadsheetApp.getUi()
 
-  if (checkGroupMembership() === true && showAlert(
+  if (isCurrentUserAdmin() === true && showAlert(
     "📂 Archive Completed Tasks",`You are about to "archive" the completed task colums on the active sheet [${activeSheet.getName()}].
     Are you sure you want to continue?`,
     ui.ButtonSet.OK_CANCEL) === ui.Button.OK)

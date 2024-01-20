@@ -111,5 +111,5 @@ function insertionSort()
   }
 
   Logger.log("Final: " + daysLeftArray)
-  Logger.log(`--- Insertion sort end in ${activeSheet.getName()} sheet ---`) 
+  Logger.log(`--- Insertion sort ends in ${activeSheet.getName()} sheet ---`) 
 }

@@ -124,7 +124,7 @@ function findArrayIndexOfText(array, searchText)
   }) + 1; // Adding 1 to convert from 0-based index to 1-based index.
 }
 
-//Toas Function (those little messages on bottom right).
+//Toast Function (those little messages on bottom right).
 /**
  * Displays a toast message with a title and timeout duration.
  *
@@ -164,7 +164,7 @@ function toast(message, tittle, timeoutSeconds)
 function showAlert(title, message, buttonsOptions)
 {
   var ui = SpreadsheetApp.getUi()
-  var response  = ui.alert(String(title), String(message), buttonsOptions)
+  let response  = ui.alert(String(title), String(message), buttonsOptions)
   return response
 }
 
@@ -184,25 +184,19 @@ function showAlert(title, message, buttonsOptions)
  */
 function getSheetURL(sheetName)
 {
-  var ss = SpreadsheetApp.getActiveSpreadsheet() 
-
   // Get the sheet by its name
-  var sheet = ss.getSheetByName(sheetName)
+  let sheet = ss.getSheetByName(sheetName)
   
   // Check if the sheet exists
   if (sheet) 
   {
     // Get the ID of the spreadsheet
-    var spreadsheetId = ss.getId()
-    
+    let spreadsheetId = ss.getId()
     // Get the sheet's index
-    var sheetId = sheet.getSheetId()
-    
+    let sheetId = sheet.getSheetId()
     // Construct the URL for the specific sheet
-    var sheetUrl = "https://docs.google.com/spreadsheets/d/" + spreadsheetId + "/edit#gid=" + sheetId
-    
-    //Logger.log("sheetUrl " + sheetUrl) 
-    
+    let sheetUrl = "https://docs.google.com/spreadsheets/d/" + spreadsheetId + "/edit#gid=" + sheetId
+
     return sheetUrl
   } 
   else 

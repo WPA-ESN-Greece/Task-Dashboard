@@ -5,13 +5,13 @@
  * and sends reminders to appropriate recipients based on priority and deadline. The recipients are determined by the
  * email addresses stored in the sheet. The function handles tasks with different priorities, such as critical, high, and medium,
  * and sends reminders accordingly. It also includes task details and links to the task sheet.
- *
+ * 
  * @function
  * @name dailyEmailReminder
  * @memberof module:Spreadsheet
  * @param {string} sheetName - The name of the sheet containing the tasks to send reminders for.
  * @returns {void} This function does not return a value.
- */
+ */ 
 function dailyEmailReminder(sheetName)
 {
   //var sheetName = "President" // for testing

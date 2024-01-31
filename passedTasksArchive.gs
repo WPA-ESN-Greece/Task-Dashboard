@@ -45,7 +45,7 @@ function passedTasksArchive()
   
 
   // For loop that goes through Columns. // i is for Columns. Data[Row][Col]
-  for (let i = 0; i <= passedTasksColumnIndex; i++)  //passedTasksColumnIndex - Task_Start_Column
+  for (let i = 0; i <= passedTasksColumnIndex; i++)  
   {
     Logger.log(`Start for passedTasksColumnIndex: ${passedTasksColumnIndex}`)
     Logger.log(i + Task_Start_Column)
@@ -125,8 +125,6 @@ function passedTasksArchive()
 
     Logger.log(`passedTasksColumnIndex NEW is ${passedTasksColumnIndex}`)
 
-    //tasksDetails = getTasksDetails(activeSheet.getName())
-    //tasksStatuses = getTasksStatuses(activeSheet.getName())
     TaskData = activeSheet.getRange(Task_Start_Row, Task_Start_Column, Task_Status_Last_Row -1, activeSheet.getLastColumn() - Task_Start_Column +1).getValues()
   }
 

@@ -18,8 +18,6 @@
  */
 function emailNewTaskNotification(sheetName)
 {
-  //var sheetName = "President" // for testing
-
   Logger.log(`--- Currently on ${sheetName} sheet. ---`)
 
   // Gets a specific sheet on a given name.

@@ -127,10 +127,10 @@ function sortTasks()
     ui.ButtonSet.OK_CANCEL) === ui.Button.OK)
   {
     insertionSort()
-
+/*
     showAlert(
     "🧙‍♂️ Sort Current Tasksheet",`Tasks on sheet [${activeSheet.getName()}] should now be sorted.`,
-    ui.ButtonSet.OK)
+    ui.ButtonSet.OK)*/
   }
   else {return}
 }
@@ -198,6 +198,17 @@ function showDocumentation()
     .setWidth(400).setHeight(60)
 
   SpreadsheetApp.getUi().showModalDialog(documentationMessage, title)
+}
+
+
+// Inser new tasksheet based on the template. 
+function inserNewTasksheet() 
+{
+  // Gets the template sheet. 
+  let templateSheet = ss.getSheetByName("#Template")
+
+  // Insert the new sheet at the leftmost position
+  ss.insertSheet(`New Tasksheet`, 0, {template: templateSheet})
 }
 
 

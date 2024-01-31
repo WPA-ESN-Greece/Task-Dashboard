@@ -17,8 +17,11 @@ function initMenu()
   let menu = ui.createMenu("🌌 ESN Menu")
   
   menu.addItem("➕ Add New Task", "addNewTask")
+  menu.addItem("➕ Add New Task Sheet ✅", "inserNewTasksheet")
   menu.addItem("🧙‍♂️ Sort Current Tasksheet", "sortTasks")
   menu.addItem("📂 Archive Completed Tasks", "archiveCompletedTasks")
+  
+  menu.addSeparator()
   menu.addItem("📚 Documentation", "showDocumentation")
   
   menu.addToUi()

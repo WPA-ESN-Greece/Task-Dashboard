@@ -1,7 +1,7 @@
 //Configuration File for easy customization.
 
 //Documentation Link
-const DOCUMENTATION_LINK = "https://docs.google.com/document/d/1NnX-ycDSOnuJCTnVVZ1Fnzt_bR62bC8KURzABlgT4Kc/edit?usp=sharing"
+const DOCUMENTATION_LINK = "https://docs.google.com/document/d/1szyIjls2X2FutOXcuyBZiHwGRWgPyu3WWlbRBUEJ1UY/edit?usp=sharing"
 
 //Dashboard Link
 const DASHBOARD_URL = SpreadsheetApp.getActiveSpreadsheet().getUrl()

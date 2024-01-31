@@ -13,9 +13,7 @@
  * @returns {void} This function does not return a value.
  */ 
 function dailyEmailReminder(sheetName)
-{
-  //var sheetName = "President" // for testing
-  
+{ 
   Logger.log(`--- Currently on ${sheetName} sheet. ---`)
 
   let currentTaskStatusesColumn
@@ -131,7 +129,7 @@ function dailyEmailReminder(sheetName)
           if (currentTaskStatusesColumn[j] === TASK_NOT_APPLICABLE) {continue;}
           // If an assignee's email address is empty in column B, is skiped.
           if (!assigneesEmails[j]) {continue;}
-          // The assignee will recive a reminder only if the Days left are between 0 and 3. 
+          // The assignee will recive a reminder only if the Days left are between 0 and email sent as the notification status. 
           if (!(taskObj.daysLeft == 0 && tasksDetails[6][i] === EMAIL_SENT)) {continue;}
           
           emailTask(taskObj, assigneesEmails[j], sheetName, "reminder")

@@ -13,29 +13,37 @@
  */
 function insertionSort()  
 {
-  Logger.log(`--- Insertion sort starts in ${activeSheet.getName()} sheet ---`)
+  let sheetName = activeSheet.getName()
+  
+  Logger.log(`--- Insertion sort starts in ${sheetName} sheet ---`)
 
   // Calculates the Row Range for task details AND task statuses. 
   let rowRange = CurrentSheetData(sheetName).task_Status_Last_Row - Task_Start_Row 
   // Gets the "Completed Tasks" Colimn Index.
   let passedTasksColumnIndex = CurrentSheetData(sheetName).passedTasksColumnIndex
   // Gets the number of Task rows that have a Task tittle. 
-  let columnRange =  (activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, passedTasksColumnIndex - Task_Start_Column).getValues().join().split(',').filter(filterEmpty)).length
+  let columnRange =  (activeSheet.getRange(Task_Start_Row, Task_Start_Column, 1, passedTasksColumnIndex - Task_Start_Column).getValues().join().split(',')).length//.filter(filterEmpty)
   // Gets current Date. 
   let currentDate = new Date()
  
   // Gets all the deadlines till the 'Completed Tasks" column and calulates an independent daysLeftArray (independent from the sheet to avoid errors if the formula breaks). Days left array for sorting. 
   let daysLeftArray = activeSheet.getRange(Task_Deadlines, Task_Start_Column, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate)
     {
+      var result
       var differenceInMilliseconds = new Date(arrayDate) - new Date(currentDate)
       var differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24))
-      return Number(differenceInDays) +1
+      result = Number(differenceInDays) +1
+
+      if (isNaN(result)) {return -1}
+      else {return result}
     })
   Logger.log(`Starting daysLeftArray: ${daysLeftArray}`)
 
   // Insertion Sort Loop. 
   for(let i = 1; i < columnRange; i++)
   {
+    Logger.log(daysLeftArray)
+
     // Key is the main value of the daysLeftArray that is compared to the value that came before it (left of the key value). 
     // In any given moment, i is +1 from j. That means daysLeftArray[i] is always the next element of daysLeftArray[j]. 
     let key = daysLeftArray[i]
@@ -101,9 +109,13 @@ function insertionSort()
     // Gets all the deadlines till the 'Completed Tasks" column and calulates an independent daysLeftArray AGAIN, after the swap that may took place above. 
     daysLeftArray = activeSheet.getRange(Task_Deadlines, Task_Start_Column, 1, columnRange).getValues().flat().map(function(element){return new Date(element)}).map(function(arrayDate)
     {
+      var result
       var differenceInMilliseconds = new Date(arrayDate) - new Date(currentDate)
       var differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24))
-      return Number(differenceInDays) +1
+      result = Number(differenceInDays) +1
+
+      if (isNaN(result)) {return -1}
+      else {return result}
     })
 
     Logger.log("after while with i:" + i)

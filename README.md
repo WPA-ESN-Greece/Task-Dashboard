@@ -1,35 +1,5 @@
 📚 Dashboard 2.2-flex | Documentation
 
-Table of Contents (Clickable)
-
-Introduction
-Scope
-✨ Features
-Why is it called flex?
-Drag and Drop Task Columns:
-Editors as Admins
-New Task Announcement Email
-Reminder Email Notifications
-Sort Tasks
-Archive Passed and Completed Tasks
-🔨 Set-Up
-Automated Set-Up
-Authentication Pop-Up
-Setting up Triggers
-Manual Set-Up / Make it yours
-Features in Detail
-Assigning a New Task
-Adding a new Task Column
-Filling out Task Details
-Sorting Tasks
-Archiving Completed Tasks
-Reporting on Assigned Tasks
-Email Notifications Example
-New Task Announcement Email
-Task Reminder Email
-🚫 Please do not touch
-The Code
-Epilogue - Bug Reporting
 
 Introduction
 Dashboard is a tool developed using technologies such as Google Spreadsheets and JavaScript code implemented using the Google Apps Script environment. 

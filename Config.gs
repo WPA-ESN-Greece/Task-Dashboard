@@ -9,6 +9,7 @@ const DASHBOARD_URL = SpreadsheetApp.getActiveSpreadsheet().getUrl()
 //System Global Variables
 let ss = SpreadsheetApp.getActiveSpreadsheet() 
 let activeSheet = ss.getActiveSheet()
+let SettingsSheet = ss.getSheetByName('Settings')
 
 //Task Object
   let taskObj =

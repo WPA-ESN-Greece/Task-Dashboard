@@ -15,8 +15,6 @@
 function passedTasksArchive() 
 {
   Logger.log(`--- Archive Completed and Passed Tasks starts in ${activeSheet.getName()} sheet ---`)
-  
-  ss.getSheetByName('🏢 Section').activate()
 
   // Initialise varibles
   let currentTaskStatuses = []

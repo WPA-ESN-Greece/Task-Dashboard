@@ -27,6 +27,12 @@ let SettingsSheet = ss.getSheetByName('Settings')
 // Timezone
   let TIMEZONE = Session.getScriptTimeZone()
 
+//Days Left Values
+  const PASSED = "Passed"
+  const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
+  let PassedTasksColumnIndex = 8 // Default value 
+
+// A function that gets the active sheets B column indexes. 
 function CurrentSheetData(sheetName)
 {
   let currentSheet = ss.getSheetByName(sheetName)
@@ -61,7 +67,7 @@ function CurrentSheetData(sheetName)
 
 
 //Email List on each sheet
-  let EMAIL_RANGE = `B${Task_Status_Start_Row}:B${Task_Status_Last_Row}`
+ let EMAIL_RANGE = `B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Start_Row}:B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Last_Row}` 
 
 //Task Statuses Values
   const TASK_DONE = "Done ✅"
@@ -81,7 +87,4 @@ function CurrentSheetData(sheetName)
   const READY_TO_EMAIL = "Ready to Email 📫"
   const EMAIL_SENT = "Email Sent"
 
-//Days Left Values
-  const PASSED = "Passed"
-  const PASSED_TASKS_COLUMN_HEADER = "✅ COMPLETED TASKS"
-  let PassedTasksColumnIndex = 8 // Default value 
+

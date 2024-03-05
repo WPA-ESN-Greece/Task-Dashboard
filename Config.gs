@@ -67,7 +67,7 @@ function CurrentSheetData(sheetName)
 
 
 //Email List on each sheet
- let EMAIL_RANGE = `B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Start_Row}:B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Last_Row}` 
+  let EMAIL_RANGE = `B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Start_Row}:B${CurrentSheetData(activeSheet.getSheetName()).task_Status_Last_Row}` 
 
 //Task Statuses Values
   const TASK_DONE = "Done ✅"

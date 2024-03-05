@@ -40,6 +40,8 @@ function initialSetup()
   authPopUp()
   // Creates an onEdit trigger that will trigger 'onEdit' function every time an edit is takes place on this spredsheet. 
   ScriptApp.newTrigger('onEdit').forSpreadsheet(ss).onEdit().create();
+  // Creates an onOpen trigger that will trigger 'onOpen' function every time the file is opened. 
+  ScriptApp.newTrigger('onOpen').forSpreadsheet(ss).onOpen().create();
   // Creates a time driven trigger that will trigger 'dailyDeadlineCheck' function every day between 10-11AM. 
   ScriptApp.newTrigger('dailyDeadlineCheck').timeBased().atHour(10).everyDays(1).create();
 
